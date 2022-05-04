@@ -12,4 +12,27 @@
     <color name="secondary_red">#E63946</color>
     <color name="secondary_emerald">#40916C</color>
     <color name="secondary_white">#FFFFFF</color>
+
+    <color name="display_pink_1">#F72585</color>
+
+    <color name="display_purple_1">#7209B7</color>
+    <color name="display_purple_2">#560BAD</color>
+
+    <color name="display_blue_1">#3F37C9</color>
+    <color name="display_blue_2">#4361EE</color>
+    <color name="display_blue_3">#4895EF</color>
+    <color name="display_blue_4">#4CC9F0</color>
+
+    <color name="display_grey_1">#495057</color>
+
+    <color name="display_onyx_1">#343A40</color>
+
+    <color name="display_black_1">#212529</color>
+
+    <color name="display_green_1">#70E000</color>
+    <color name="display_green_2">#9EF01A</color>
+    <color name="display_green_3">#007200</color>
+    <color name="display_green_4">#006400</color>
+    <color name="display_green_5">#004B23</color>
+
 </resources>

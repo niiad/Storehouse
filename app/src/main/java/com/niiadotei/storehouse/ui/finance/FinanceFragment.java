@@ -23,8 +23,6 @@ public class FinanceFragment extends Fragment {
         binding = FragmentFinanceBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textFinance;
-        financeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

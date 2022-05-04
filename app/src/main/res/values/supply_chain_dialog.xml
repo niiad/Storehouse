@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="choose_supplier_hint">Select a supplier</string>
+    <string name="choose_product_hint">Select a product</string>
+    <string name="supply_quantity_hint">Quantity</string>
+    <string name="add_supply_button">Add Supply</string>
+</resources>

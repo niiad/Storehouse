@@ -35,5 +35,5 @@
         android:contentDescription="@string/fab_description"
         android:gravity="end|bottom"
         android:src="@drawable/ic_add"
-        app:rippleColor="@color/secondary_white" />
+        app:rippleColor="@color/secondary_yellow" />
 </RelativeLayout>

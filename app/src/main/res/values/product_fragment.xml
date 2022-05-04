@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fab_product_description">Add new product</string>
+    <string name="recycler_product_description">Collection of added product</string>
+</resources>

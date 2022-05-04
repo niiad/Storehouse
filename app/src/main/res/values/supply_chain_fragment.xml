@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quantity_hint">Quantity</string>
+    <string name="supply_button">Supply</string>
+    <string name="received_button">Received</string>
+</resources>

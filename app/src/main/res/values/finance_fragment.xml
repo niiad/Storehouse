@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cost_unit_view">Cost price per unit</string>
+    <string name="total_cost_view">Total cost price</string>
+
+    <string name="selling_unit_view">Selling price per unit</string>
+    <string name="total_selling_view">Total selling price</string>
+
+    <string name="profit_unit_view">Profit per unit</string>
+    <string name="total_profit_view">Total profit</string>
+
+    <string name="quantity_stock_view">Quantity in stock</string>
+    <string name="profit_percent_view">Profit %</string>
+
+    <string name="finance_product_title">Products Overview</string>
+    <string name="finance_revenue_title">Revenue Overview</string>
+
+    <string name="finance_daily_revenue_title">Daily Revenue</string>
+    <string name="finance_daily_expenditure_title">Daily Expenditure</string>
+
+    <string name="product_overview_total_product_title">Total number of products</string>
+    <string name="product_overview_stock_value_title">Stock value</string>
+
+    <string name="product_overview_cost_price_title">Total cost price</string>
+    <string name="product_overview_selling_price_title">Total selling price</string>
+
+    <string name="product_overview_valuable_product_title">Valuable product</string>
+    <string name="product_overview_valuable_price_title">Valuable product in value</string>
+
+    <string name="product_overview_profitable_product_title">Profitable product</string>
+    <string name="product_overview_profitable_price_title">Profitable product in value</string>
+
+</resources>

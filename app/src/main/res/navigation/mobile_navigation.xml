@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_finance"
-        android:name="com.niiadotei.storehouse.ui.stock.StockFragment"
+        android:name="com.niiadotei.storehouse.ui.finance.FinanceFragment"
         android:label="@string/title_finance"
         tools:layout="@layout/fragment_finance" />
 

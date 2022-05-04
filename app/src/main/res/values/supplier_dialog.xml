@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="supplier_name_hint">Name of Supplier</string>
+    <string name="supplier_display_hint">Display name of supplier</string>
+    <string name="supplier_phone_hint">Phone number</string>
+    <string name="supplier_location_hint">Location</string>
+    <string name="add_supplier_button">Add Supplier</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="product_name_hint">Product name</string>
+    <string name="product_display_hint">Product display name</string>
+    <string name="product_cost_hint">Cost Price</string>
+    <string name="product_price_hint">Selling Price</string>
+    <string name="product_quantity_hint">Quantity</string>
+    <string name="select_supplier_button">Select supplier</string>
+    <string name="add_product_button">Add product</string>
+</resources>

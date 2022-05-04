@@ -6,17 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".ui.supplychain.SupplyChainFragment">
 
-    <TextView
-        android:id="@+id/text_home"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/productRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="64dp"
+        android:paddingStart="@dimen/default_dimen"
+        android:paddingEnd="@dimen/default_dimen"
+        android:contentDescription="@string/recycler_product_description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/item_supply_chain" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addSupplierFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/secondary_yellow"
+        android:contentDescription="@string/fab_product_description"
+        android:gravity="end|bottom"
+        android:src="@drawable/ic_supplier"
+        app:layout_constraintBottom_toTopOf="@+id/addSupplyChainFAB"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:rippleColor="@color/secondary_yellow" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addSupplyChainFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/secondary_yellow"
+        android:contentDescription="@string/fab_product_description"
+        android:gravity="end|bottom"
+        android:src="@drawable/ic_supply"
+        app:layout_constraintBottom_toBottomOf="@+id/productRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:rippleColor="@color/secondary_yellow" />
 </androidx.constraintlayout.widget.ConstraintLayout>

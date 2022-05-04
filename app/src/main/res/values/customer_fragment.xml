@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fab_description">Add new customers</string>
+    <string name="customer_search">Search</string>
+    <string name="customer_menu">Menu</string>
+    <string name="update_button">Update</string>
+
+</resources>

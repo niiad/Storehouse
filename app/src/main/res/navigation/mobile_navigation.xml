@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_stock">
+
+    <fragment
+        android:id="@+id/navigation_supply_chain"
+        android:name="com.niiadotei.storehouse.ui.supplychain.SupplyChainFragment"
+        android:label="@string/title_supply_chain"
+        tools:layout="@layout/fragment_supply_chain" />
+
+    <fragment
+        android:id="@+id/navigation_finance"
+        android:name="com.niiadotei.storehouse.ui.stock.StockFragment"
+        android:label="@string/title_finance"
+        tools:layout="@layout/fragment_finance" />
+
+    <fragment
+        android:id="@+id/navigation_stock"
+        android:name="com.niiadotei.storehouse.ui.stock.StockFragment"
+        android:label="@string/title_stock"
+        tools:layout="@layout/fragment_stock" />
+
+    <fragment
+        android:id="@+id/navigation_customers"
+        android:name="com.niiadotei.storehouse.ui.customers.CustomersFragment"
+        android:label="@string/title_customers"
+        tools:layout="@layout/fragment_customers" />
+
+    <fragment
+        android:id="@+id/navigation_apprentice"
+        android:name="com.niiadotei.storehouse.ui.apprentice.ApprenticeFragment"
+        android:label="@string/title_apprentice"
+        tools:layout="@layout/fragment_apprentice" />
+</navigation>

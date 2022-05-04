@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Storehouse</string>
+
+    <string name="title_supply_chain">Supply chain</string>
+    <string name="title_finance">Finance</string>
+    <string name="title_stock">Stock</string>
+    <string name="title_customers">Customers</string>
+    <string name="title_apprentice">Apprentice</string>
+
+</resources>

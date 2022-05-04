@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#4361EE</color>
+    <color name="primary_dark">#3F37C9</color>
+    <color name="primary_light">#4895EF</color>
+
+    <color name="secondary_space_cadet">#2B2D42</color>
+    <color name="secondary_orange">#F77F00</color>
+    <color name="secondary_yellow">#FCBF49</color>
+    <color name="secondary_black">#000000</color>
+    <color name="secondary_platinum">#E5E5E5</color>
+    <color name="secondary_red">#E63946</color>
+    <color name="secondary_emerald">#40916C</color>
+    <color name="secondary_white">#FFFFFF</color>
+</resources>

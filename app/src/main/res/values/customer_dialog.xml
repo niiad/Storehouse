@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="name_hint">Full name</string>
+    <string name="number_hint">Phone number</string>
+    <string name="location_hint">City or Town</string>
+    <string name="add_customer_button">Add Customer</string>
+</resources>

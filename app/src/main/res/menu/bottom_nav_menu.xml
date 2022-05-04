@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_supply_chain"
+        android:icon="@drawable/ic_supply_chain"
+        android:title="@string/title_supply_chain" />
+
+    <item
+        android:id="@+id/navigation_finance"
+        android:icon="@drawable/ic_finance"
+        android:title="@string/title_finance" />
+
+    <item
+        android:id="@+id/navigation_stock"
+        android:icon="@drawable/ic_stock"
+        android:title="@string/title_stock" />
+
+    <item
+        android:id="@+id/navigation_customers"
+        android:icon="@drawable/ic_customers"
+        android:title="@string/title_customers" />
+
+    <item
+        android:id="@+id/navigation_apprentice"
+        android:icon="@drawable/ic_apprentice"
+        android:title="@string/title_apprentice" />
+
+</menu>

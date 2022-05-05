@@ -160,18 +160,11 @@ public class SupplyChainFragment extends Fragment {
                 productDisplayAlertDialog.show();
             });
 
-            EditText supplyQuantity = dialog.findViewById(R.id.supplyQuantityEditText);
 
             Button addSupply = dialog.findViewById(R.id.addSupplyButton);
             addSupply.setOnClickListener(view1 -> {
-                String quantity = supplyQuantity.getText().toString().trim();
                 String id = databaseHelper.getSupplierID(selectedDisplay[0]);
                 String productID = databaseHelper.getProductID(selectedProductDisplay[0]);
-
-                if (TextUtils.isEmpty(quantity)) {
-                    Toast.makeText(getContext(), "Specify the quantity you want to supply", Toast.LENGTH_LONG).show();
-                    dialog.dismiss();
-                }
 
                 if (TextUtils.isEmpty(selectedDisplay[0])) {
                     Toast.makeText(getContext(), "Supplier display name cannot be empty", Toast.LENGTH_LONG).show();
@@ -183,9 +176,9 @@ public class SupplyChainFragment extends Fragment {
                     dialog.dismiss();
                 }
 
-                databaseHelper.insertSupply(id, productID, quantity, "0");
+                databaseHelper.insertSupply(id, productID);
 
-                // view model here
+                supplyChainViewModel.updateArray(databaseHelper.getSupplyChainArray());
 
                 dialog.dismiss();
             });

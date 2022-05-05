@@ -38,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "(id INTEGER primary key autoincrement, name TEXT, display TEXT, phone TEXT, location TEXT)";
 
         String createSupplyTableQuery = "create table " + supplyChainTable +
-                "(id INTEGER primary key autoincrement, supplier INTEGER, product INTEGER, quantity INTEGER, supplied INTEGER)";
+                "(id INTEGER primary key autoincrement, supplier INTEGER, product INTEGER, quantity INTEGER)";
 
         sqLiteDatabase.execSQL(createCustomerTableQuery);
         sqLiteDatabase.execSQL(createSupplierTableQuery);
@@ -102,14 +102,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.close();
     }
 
-    public void insertSupply(String supplier, String product, String quantity, String supplied) {
+    public void insertSupply(String supplier, String product) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("supplier", supplier);
         contentValues.put("product", product);
-        contentValues.put("quantity", quantity);
-        contentValues.put("supplied", supplied);
 
         sqLiteDatabase.insertWithOnConflict(supplyChainTable, null, contentValues, SQLiteDatabase.CONFLICT_REPLACE);
         sqLiteDatabase.close();
@@ -151,15 +149,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(query);
         sqLiteDatabase.close();
 
-    }
-
-    public void updateSupply(String id, String supplied) {
-        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-
-        String query = "update " + supplyChainTable + " set supplied='" + supplied + "' where id='" + id + "'";
-
-        sqLiteDatabase.execSQL(query);
-        sqLiteDatabase.close();
     }
 
     public void deleteCustomer(String id) {
@@ -327,7 +316,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     jsonObject.put("supplier", cursor.getString(1));
                     jsonObject.put("product", cursor.getString(2));
                     jsonObject.put("quantity", cursor.getString(3));
-                    jsonObject.put("supplied", cursor.getString(4));
 
                     jsonArray.put(jsonObject);
                 } catch (JSONException e) {

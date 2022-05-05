@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.niiadotei.storehouse.R;
@@ -27,6 +29,10 @@ public class SupplyChainFragment extends Fragment {
 
     DatabaseHelper databaseHelper;
 
+    SupplyChainViewModel supplyChainViewModel;
+
+    RecyclerView recyclerView;
+
     private FragmentSupplyChainBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -34,6 +40,13 @@ public class SupplyChainFragment extends Fragment {
         binding = FragmentSupplyChainBinding.inflate(inflater, container, false);
 
         databaseHelper = new DatabaseHelper(this.getActivity());
+
+        recyclerView = binding.supplyChainRecyclerView;
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        supplyChainViewModel = new SupplyChainViewModel(this, databaseHelper.getSupplyChainArray());
+
+        recyclerView.setAdapter(supplyChainViewModel);
 
         addSupplierFAB = binding.addSupplierFAB;
         addSupplyChainFAB = binding.addSupplyChainFAB;

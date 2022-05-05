@@ -7,10 +7,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +38,12 @@ public class StockFragment extends Fragment {
     DatabaseHelper databaseHelper;
 
     private FragmentStockBinding binding;
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -136,6 +146,30 @@ public class StockFragment extends Fragment {
         });
 
         return binding.getRoot();
+    }
+
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.stock_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+        MenuItem search = menu.findItem(R.id.search_stock);
+        SearchView searchView = (SearchView) search.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                stockViewModel.getFilter().filter(s);
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                stockViewModel.getFilter().filter(s);
+
+                return false;
+            }
+        });
     }
 
     @Override

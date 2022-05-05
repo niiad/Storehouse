@@ -7,7 +7,7 @@
     tools:context=".ui.supplychain.SupplyChainFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/productRecyclerView"
+        android:id="@+id/supplyChainRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="64dp"
@@ -48,7 +48,7 @@
         android:contentDescription="@string/fab_product_description"
         android:gravity="end|bottom"
         android:src="@drawable/ic_supply"
-        app:layout_constraintBottom_toBottomOf="@+id/productRecyclerView"
+        app:layout_constraintBottom_toBottomOf="@+id/supplyChainRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:rippleColor="@color/secondary_yellow" />
 </androidx.constraintlayout.widget.ConstraintLayout>

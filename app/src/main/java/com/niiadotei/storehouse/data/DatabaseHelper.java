@@ -141,6 +141,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.close();
     }
 
+    public void updateProductQuantity(int id, int quantity) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        int newQuantity = getProductQuantityFromID(id);
+        newQuantity += quantity;
+        String query = "update " + productTableName + " set quantity='" + newQuantity + "' where id='" + id + "'";
+
+        sqLiteDatabase.execSQL(query);
+        sqLiteDatabase.close();
+
+    }
+
     public void updateSupply(String id, String supplied) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
@@ -495,6 +507,62 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.close();
 
         return name;
+    }
+
+    public String getProductNameFromID(int id) {
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+
+        String query = "select * from " + productTableName;
+
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        String name = "";
+
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getInt(0) == id) {
+                    name = cursor.getString(2);
+
+                    cursor.close();
+                    sqLiteDatabase.close();
+
+                    return name;
+                }
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        sqLiteDatabase.close();
+
+        return name;
+    }
+
+    public int getProductQuantityFromID(int id) {
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+
+        String query = "select * from " + productTableName;
+
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        int quantity = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getInt(0) == id) {
+                    quantity = cursor.getInt(5);
+
+                    cursor.close();
+                    sqLiteDatabase.close();
+
+                    return quantity;
+                }
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        sqLiteDatabase.close();
+
+        return quantity;
     }
 
     public JSONArray getFilteredCustomerArray(String name) {

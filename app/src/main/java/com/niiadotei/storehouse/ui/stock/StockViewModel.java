@@ -2,6 +2,7 @@ package com.niiadotei.storehouse.ui.stock;
 
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +71,33 @@ public class StockViewModel extends RecyclerView.Adapter<StockViewModel.ViewHold
             e.printStackTrace();
         }
 
-        // holder click listeners
+        holder.itemView.setOnLongClickListener(view -> {
+            int getPosition = holder.getAdapterPosition();
+
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(getPosition);
+
+                String stringID = jsonObject.getString("id");
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(fragment.getActivity());
+                builder.setTitle("Confirm");
+                builder.setMessage("Are you sure you want to delete this product?");
+
+                builder.setPositiveButton("Yes", ((dialogInterface, i) -> {
+                    databaseHelper.deleteProduct(stringID);
+                    jsonArray.remove(getPosition);
+                    notifyItemRemoved(getPosition);
+                    notifyItemRangeRemoved(getPosition, jsonArray.length());
+                }));
+
+                builder.setNegativeButton("No", ((dialogInterface, i) -> dialogInterface.dismiss()));
+                builder.show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return true;
+        });
     }
 
     @Override

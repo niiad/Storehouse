@@ -11,21 +11,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.niiadotei.storehouse.R;
 import com.niiadotei.storehouse.data.DatabaseHelper;
 import com.niiadotei.storehouse.databinding.FragmentStockBinding;
 
-import java.util.ArrayList;
 
 public class StockFragment extends Fragment {
     FloatingActionButton addProductFAB;
+
+    StockViewModel stockViewModel;
+
+    RecyclerView recyclerView;
 
     DatabaseHelper databaseHelper;
 
@@ -36,6 +40,13 @@ public class StockFragment extends Fragment {
         binding = FragmentStockBinding.inflate(inflater, container, false);
 
         databaseHelper = new DatabaseHelper(this.getActivity());
+
+        recyclerView = binding.productRecyclerView;
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+
+        stockViewModel = new StockViewModel(this, databaseHelper.getProductArray());
+
+        recyclerView.setAdapter(stockViewModel);
 
         addProductFAB = binding.addProductFAB;
 
@@ -117,7 +128,7 @@ public class StockFragment extends Fragment {
 
                 databaseHelper.insertProduct(name, display, cost, price, quantity, id);
 
-                // add view model here
+                stockViewModel.updateArray(databaseHelper.getProductArray());
 
                 dialog.dismiss();
 

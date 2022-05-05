@@ -469,6 +469,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    public String getSupplierNameFromID(String id) {
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+
+        String query = "select * from " + supplierTableName;
+
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        String name = "";
+
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(0).equals(id)) {
+                    name = cursor.getString(2);
+
+                    cursor.close();
+                    sqLiteDatabase.close();
+
+                    return name;
+                }
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        sqLiteDatabase.close();
+
+        return name;
+    }
+
     public JSONArray getFilteredCustomerArray(String name) {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
 

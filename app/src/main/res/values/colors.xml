@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#4361EE</color>
+    <color name="primary">#4895EF</color>
     <color name="primary_dark">#3F37C9</color>
-    <color name="primary_light">#4895EF</color>
+    <color name="primary_light">#4CC9F0</color>
 
     <color name="secondary_space_cadet">#2B2D42</color>
     <color name="secondary_orange">#F77F00</color>
@@ -21,7 +21,6 @@
     <color name="display_blue_1">#3F37C9</color>
     <color name="display_blue_2">#4361EE</color>
     <color name="display_blue_3">#4895EF</color>
-    <color name="display_blue_4">#4CC9F0</color>
 
     <color name="display_grey_1">#495057</color>
 

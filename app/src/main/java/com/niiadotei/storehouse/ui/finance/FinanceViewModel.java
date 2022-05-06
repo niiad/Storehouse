@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
@@ -88,6 +89,12 @@ public class FinanceViewModel extends RecyclerView.Adapter<FinanceViewModel.View
             holder.totalProfitTextView.setText(totalProfitValue);
 
             holder.profitPercentTextView.setText("N/A");
+
+            if (sellingPrice > cost) {
+                holder.totalProfitTextView.setTextColor(ContextCompat.getColor(fragment.requireContext(), R.color.secondary_emerald));
+            } else if (sellingPrice < cost) {
+                holder.totalProfitTextView.setTextColor(ContextCompat.getColor(fragment.requireContext(), R.color.secondary_red));
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();

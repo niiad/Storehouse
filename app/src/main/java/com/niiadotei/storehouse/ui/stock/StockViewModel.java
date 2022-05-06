@@ -21,6 +21,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class StockViewModel extends RecyclerView.Adapter<StockViewModel.ViewHolder> implements Filterable {
     Fragment fragment;
 
@@ -60,8 +64,10 @@ public class StockViewModel extends RecyclerView.Adapter<StockViewModel.ViewHold
             holder.displayNameTextView.setText(jsonObject.getString("display"));
             holder.nameTextView.setText(jsonObject.getString("name"));
 
-            String price = "GHC " + jsonObject.getString("price");
-            holder.priceTextView.setText(price);
+            NumberFormat currencyInstance = DecimalFormat.getCurrencyInstance(Locale.US);
+
+            double price = jsonObject.getDouble("price");
+            holder.priceTextView.setText(currencyInstance.format(price));
 
             holder.supplierTextView.setText(databaseHelper.getSupplierNameFromID(jsonObject.getString("supplier")));
 

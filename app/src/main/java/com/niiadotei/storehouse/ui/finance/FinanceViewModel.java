@@ -17,6 +17,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class FinanceViewModel extends RecyclerView.Adapter<FinanceViewModel.ViewHolder> {
     Fragment fragment;
 
@@ -48,35 +52,39 @@ public class FinanceViewModel extends RecyclerView.Adapter<FinanceViewModel.View
         try {
             JSONObject jsonObject = jsonArray.getJSONObject(position);
 
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            NumberFormat currencyInstance = DecimalFormat.getCurrencyInstance(Locale.US);
+
+
             holder.displayProductNameTextView.setText(jsonObject.getString("display"));
             holder.productNameTextView.setText(jsonObject.getString("name"));
 
             double cost = jsonObject.getDouble("cost");
-            String costValue = String.valueOf(cost);
+            String costValue = currencyInstance.format(cost);
             holder.costPricePerUnitTextView.setText(costValue);
 
             int quantity = jsonObject.getInt("quantity");
             String quantityValue = String.valueOf(quantity);
             holder.quantityInStockTextView.setText(quantityValue);
 
-            double totalCost = cost * quantity;
-            String totalCostValue = String.valueOf(totalCost);
+            double totalCost = Double.parseDouble(decimalFormat.format(cost)) * quantity;
+            String totalCostValue = currencyInstance.format(totalCost);
             holder.totalCostPriceTextView.setText(totalCostValue);
 
             double sellingPrice = jsonObject.getDouble("price");
-            String sellingPriceValue = String.valueOf(sellingPrice);
+            String sellingPriceValue = currencyInstance.format(sellingPrice);
             holder.sellingPricePerUnitTextView.setText(sellingPriceValue);
 
-            double totalSellingPrice = sellingPrice * quantity;
-            String totalSellingPriceValue = String.valueOf(totalSellingPrice);
+            double totalSellingPrice = Double.parseDouble(decimalFormat.format(sellingPrice)) * quantity;
+            String totalSellingPriceValue = currencyInstance.format(totalSellingPrice);
             holder.totalSellingPriceTextView.setText(totalSellingPriceValue);
 
-            double profitPerUnit = sellingPrice - cost;
-            String profitPerUnitValue = String.valueOf(profitPerUnit);
+            double profitPerUnit = Double.parseDouble(decimalFormat.format(sellingPrice - cost));
+            String profitPerUnitValue = currencyInstance.format(profitPerUnit);
             holder.profitPerUnitTextView.setText(profitPerUnitValue);
 
-            double totalProfit = profitPerUnit * quantity;
-            String totalProfitValue = String.valueOf(totalProfit);
+            double totalProfit = Double.parseDouble(decimalFormat.format(profitPerUnit * quantity));
+            String totalProfitValue = currencyInstance.format(totalProfit);
             holder.totalProfitTextView.setText(totalProfitValue);
 
             holder.profitPercentTextView.setText("N/A");

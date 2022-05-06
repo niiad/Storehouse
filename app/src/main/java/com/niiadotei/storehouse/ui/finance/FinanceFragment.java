@@ -29,7 +29,7 @@ public class FinanceFragment extends Fragment {
         databaseHelper = new DatabaseHelper(this.getActivity());
 
         recyclerView = binding.financeProductRecycler;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true));
 
         financeViewModel = new FinanceViewModel(this, databaseHelper.getProductArray());
 

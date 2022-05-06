@@ -106,8 +106,6 @@ public class SupplyChainFragment extends Fragment {
 
                 databaseHelper.insertSupplier(name, display, phone, location);
 
-                // add view model here
-
                 dialog.dismiss();
 
             });

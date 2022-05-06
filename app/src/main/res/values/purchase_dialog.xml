@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="purchase_quantity_hint">Quantity to purchase</string>
+    <string name="purchase_customer_hint">Customer</string>
+    <string name="make_purchase_hint">Make a purchase</string>
+</resources>

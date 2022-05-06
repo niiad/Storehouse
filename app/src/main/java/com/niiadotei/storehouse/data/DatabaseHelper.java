@@ -405,6 +405,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public String[] getAllCustomersWithPhone() {
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+
+        ArrayList<String> customers = new ArrayList<>();
+        String[] result;
+
+        String query = "select * from " + customerTableName;
+
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                customers.add(cursor.getString(1) + ", " + cursor.getString(2));
+            } while (cursor.moveToNext());
+        }
+
+        result = new String[customers.size()];
+        result = customers.toArray(result);
+
+        cursor.close();
+        sqLiteDatabase.close();
+
+        return result;
+    }
+
     public String[] getAllProductDisplayNames() {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
 

@@ -3,12 +3,18 @@ package com.niiadotei.storehouse.ui.stock;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,6 +29,7 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Arrays;
 import java.util.Locale;
 
 public class StockViewModel extends RecyclerView.Adapter<StockViewModel.ViewHolder> implements Filterable {
@@ -58,6 +65,8 @@ public class StockViewModel extends RecyclerView.Adapter<StockViewModel.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull StockViewModel.ViewHolder holder, int position) {
+        double price = 0.0;
+
         try {
             JSONObject jsonObject = jsonArray.getJSONObject(position);
 
@@ -66,7 +75,7 @@ public class StockViewModel extends RecyclerView.Adapter<StockViewModel.ViewHold
 
             NumberFormat currencyInstance = DecimalFormat.getCurrencyInstance(Locale.US);
 
-            double price = jsonObject.getDouble("price");
+            price = jsonObject.getDouble("price");
             holder.priceTextView.setText(currencyInstance.format(price));
 
             holder.supplierTextView.setText(databaseHelper.getSupplierNameFromID(jsonObject.getString("supplier")));
@@ -76,6 +85,85 @@ public class StockViewModel extends RecyclerView.Adapter<StockViewModel.ViewHold
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        double finalPrice = price;
+        holder.itemView.setOnClickListener(view -> {
+            String[] customers = databaseHelper.getAllCustomersWithPhone();
+            Arrays.sort(customers);
+            final String[] selectedCustomer = new String[1];
+            selectedCustomer[0] = "";
+            int[] checkedCustomer = {-1};
+
+            Dialog dialog = new Dialog(holder.itemView.getContext());
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.setContentView(R.layout.dialog_purchase);
+            dialog.show();
+
+            EditText editText = dialog.findViewById(R.id.purchase_quantity);
+
+            Button selectCustomer = dialog.findViewById(R.id.selectCustomerButton);
+            selectCustomer.setOnClickListener(view1 -> {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(holder.itemView.getContext());
+                alertDialog.setTitle("Select the customer buying");
+                alertDialog.setSingleChoiceItems(customers, checkedCustomer[0], (dialogInterface, i) -> {
+                    checkedCustomer[0] = i;
+                    selectedCustomer[0] = customers[i];
+
+                    selectCustomer.setText(selectedCustomer[0].substring(0, 10));
+                    dialogInterface.dismiss();
+                });
+
+                alertDialog.setNegativeButton("Cancel", (dialogInterface, i) -> {
+
+                });
+
+                AlertDialog customerAlertDialog = alertDialog.create();
+                customerAlertDialog.show();
+            });
+
+            Button makePurchase = dialog.findViewById(R.id.makePurchaseButton);
+            makePurchase.setOnClickListener(view1 -> {
+                try {
+                    int quantity = Integer.parseInt(editText.getText().toString().trim());
+
+                    if (quantity == 0) {
+                        Toast.makeText(holder.itemView.getContext(), "Quantity cannot be 0", Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                    }
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(fragment.getActivity());
+                    builder.setTitle("Confirm");
+
+                    double totalPurchaseCost = finalPrice * quantity;
+                    NumberFormat currencyInstance = DecimalFormat.getCurrencyInstance(Locale.US);
+
+                    builder.setMessage("Collect from the customer, a total cost of " + currencyInstance.format(totalPurchaseCost) + " before confirming.");
+
+                    builder.setPositiveButton("Yes", ((dialogInterface, i) -> {
+                        try {
+                            JSONObject jsonObject = jsonArray.getJSONObject(holder.getAdapterPosition());
+
+                            int productID = jsonObject.getInt("id");
+
+                            databaseHelper.updateProductQuantity(productID, -quantity);
+
+                            Toast.makeText(holder.itemView.getContext(), "Purchase successfully made", Toast.LENGTH_LONG).show();
+
+                            dialog.dismiss();
+                        } catch (JSONException e) {
+                            Toast.makeText(holder.itemView.getContext(), "Error making the purchase", Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
+                        }
+                    }));
+
+                    builder.setNegativeButton("No", ((dialogInterface, i) -> dialogInterface.dismiss()));
+                    builder.show();
+                } catch (NumberFormatException e) {
+                    Toast.makeText(holder.itemView.getContext(), "Quantity format not supported", Toast.LENGTH_LONG).show();
+                }
+            });
+
+        });
 
         holder.itemView.setOnLongClickListener(view -> {
             int getPosition = holder.getAdapterPosition();

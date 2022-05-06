@@ -2,7 +2,8 @@ package com.niiadotei.storehouse.ui.supplychain;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.graphics.Color;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +36,7 @@ public class SupplyChainViewModel extends RecyclerView.Adapter<SupplyChainViewMo
     DatabaseHelper databaseHelper;
 
     public FilteredViewHolder filteredViewHolder;
+
 
     public SupplyChainViewModel(Fragment fragment, JSONArray jsonArray) {
         this.fragment = fragment;
@@ -66,32 +69,74 @@ public class SupplyChainViewModel extends RecyclerView.Adapter<SupplyChainViewMo
             holder.suppliedProductTextView.setText(databaseHelper.getProductNameFromID(jsonObject.getInt("product")));
             holder.supplierTextView.setText(databaseHelper.getSupplierNameFromID(jsonObject.getString("supplier")));
 
-            holder.receivedButton.setEnabled(false);
 
             final int[] quantity = {0};
 
             holder.supplyButton.setOnClickListener(view -> {
                 String quantityFromUser = holder.supplyQuantityEditText.getText().toString();
-                quantity[0] = Integer.parseInt(quantityFromUser);
+
+                try {
+                    quantity[0] = Integer.parseInt(quantityFromUser);
+
+                    SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("supplyChain", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    editor.putInt("quantity", quantity[0]);
+                    editor.putBoolean("inProgress", true);
+
+                    editor.apply();
+
+                } catch (NumberFormatException e) {
+                    Toast.makeText(view.getContext(), "Format not supported", Toast.LENGTH_LONG).show();
+                }
 
                 if (TextUtils.isEmpty(quantityFromUser)) {
                     Toast.makeText(view.getContext(), "Quantity not given", Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                holder.supplyButton.setText("In progress");
-                holder.supplyButton.setBackgroundColor(Color.GREEN);
-                holder.supplyButton.setEnabled(false);
-                holder.receivedButton.setEnabled(true);
+                SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("supplyChain", Context.MODE_PRIVATE);
+                boolean inProgress = sharedPreferences.getBoolean("inProgress", false);
+
+                if (inProgress) {
+                    holder.supplyButton.setText(R.string.supply_progress_hint);
+                    holder.supplyButton.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.secondary_emerald));
+                    holder.supplyButton.setEnabled(false);
+
+                    holder.supplyQuantityEditText.setEnabled(false);
+
+                    holder.receivedButton.setEnabled(true);
+                    holder.receivedButton.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.primary_dark));
+                    holder.receivedButton.setText(R.string.received_button);
+                }
             });
 
             holder.receivedButton.setOnClickListener(view -> {
-                databaseHelper.updateProductQuantity(product, quantity[0]);
+                SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("supplyChain", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                Toast.makeText(view.getContext(), "Supply successful!", Toast.LENGTH_LONG).show();
+                boolean inProgress = sharedPreferences.getBoolean("inProgress", false);
 
-                holder.supplyButton.setEnabled(true);
-                holder.receivedButton.setEnabled(false);
+                if (inProgress) {
+                    databaseHelper.updateProductQuantity(product, sharedPreferences.getInt("quantity", 0));
+                    Toast.makeText(view.getContext(), "Supply successful!", Toast.LENGTH_LONG).show();
+
+                    holder.supplyButton.setEnabled(true);
+                    holder.supplyButton.setText(R.string.supply_button);
+                    holder.supplyButton.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.secondary_red));
+
+                    holder.supplyQuantityEditText.setEnabled(true);
+
+                    holder.receivedButton.setEnabled(false);
+                    holder.receivedButton.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.primary_light));
+                    holder.receivedButton.setText(R.string.received_progress_hint);
+
+                    editor.putBoolean("inProgress", false);
+                    editor.apply();
+                } else {
+                    holder.receivedButton.setText(R.string.received_progress_hint);
+                }
+
             });
 
         } catch (JSONException e) {
@@ -163,6 +208,23 @@ public class SupplyChainViewModel extends RecyclerView.Adapter<SupplyChainViewMo
             supplyQuantityEditText = itemView.findViewById(R.id.supply_quantity);
             supplyButton = itemView.findViewById(R.id.supply_button);
             receivedButton = itemView.findViewById(R.id.received_button);
+
+            SharedPreferences sharedPreferences = itemView.getContext().getSharedPreferences("supplyChain", Context.MODE_PRIVATE);
+
+            boolean inProgress = sharedPreferences.getBoolean("inProgress", false);
+            if (inProgress) {
+                supplyButton.setText(R.string.supply_progress_hint);
+                supplyButton.setBackgroundColor(ContextCompat.getColor(itemView.getContext(), R.color.secondary_emerald));
+                supplyButton.setEnabled(false);
+
+                int quantity = sharedPreferences.getInt("quantity", 0);
+
+                supplyQuantityEditText.setText(Integer.toString(quantity));
+                supplyQuantityEditText.setEnabled(false);
+
+                receivedButton.setEnabled(true);
+                receivedButton.setText(R.string.received_button);
+            }
         }
     }
 

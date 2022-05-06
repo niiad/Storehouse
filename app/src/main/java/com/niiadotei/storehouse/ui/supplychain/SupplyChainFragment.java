@@ -163,7 +163,7 @@ public class SupplyChainFragment extends Fragment {
 
             Button addSupply = dialog.findViewById(R.id.addSupplyButton);
             addSupply.setOnClickListener(view1 -> {
-                String id = databaseHelper.getSupplierID(selectedDisplay[0]);
+                int id = databaseHelper.getSupplierID(selectedDisplay[0]);
                 String productID = databaseHelper.getProductID(selectedProductDisplay[0]);
 
                 if (TextUtils.isEmpty(selectedDisplay[0])) {

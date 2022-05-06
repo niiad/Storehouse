@@ -27,6 +27,8 @@ import com.niiadotei.storehouse.R;
 import com.niiadotei.storehouse.data.DatabaseHelper;
 import com.niiadotei.storehouse.databinding.FragmentStockBinding;
 
+import java.text.DecimalFormat;
+
 
 public class StockFragment extends Fragment {
     FloatingActionButton addProductFAB;
@@ -99,12 +101,39 @@ public class StockFragment extends Fragment {
 
             Button addProduct = dialog.findViewById(R.id.addProductButton);
             addProduct.setOnClickListener(view1 -> {
+                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
                 String name = productName.getText().toString().trim();
                 String display = productDisplay.getText().toString().trim();
-                String cost = productCost.getText().toString().trim();
-                String price = productPrice.getText().toString().trim();
-                String quantity = productQuantity.getText().toString().trim();
-                String id = databaseHelper.getSupplierID(selectedDisplay[0]);
+
+                double cost = 0.0;
+                double price = 0.0;
+                int quantity = 0;
+
+                try {
+                    cost = Double.parseDouble(productCost.getText().toString().trim());
+                    decimalFormat.format(cost);
+                } catch (NumberFormatException e) {
+                    Toast.makeText(view1.getContext(), "Format not supported", Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+                }
+
+                try {
+                    price = Double.parseDouble(productPrice.getText().toString().trim());
+                    decimalFormat.format(price);
+                } catch (NumberFormatException e) {
+                    Toast.makeText(view1.getContext(), "Format not supported", Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+                }
+
+                try {
+                    quantity = Integer.parseInt(productQuantity.getText().toString().trim());
+                } catch (NumberFormatException e) {
+                    Toast.makeText(view1.getContext(), "Format not supported", Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+                }
+
+                int id = databaseHelper.getSupplierID(selectedDisplay[0]);
 
                 if (TextUtils.isEmpty(name)) {
                     Toast.makeText(getContext(), "Product name cannot be empty", Toast.LENGTH_LONG).show();
@@ -113,21 +142,6 @@ public class StockFragment extends Fragment {
 
                 if (TextUtils.isEmpty(display)) {
                     Toast.makeText(getContext(), "Display name cannot be empty", Toast.LENGTH_LONG).show();
-                    dialog.dismiss();
-                }
-
-                if (TextUtils.isEmpty(cost)) {
-                    Toast.makeText(getContext(), "Cost cannot be empty", Toast.LENGTH_LONG).show();
-                    dialog.dismiss();
-                }
-
-                if (TextUtils.isEmpty(price)) {
-                    Toast.makeText(getContext(), "Price cannot be empty", Toast.LENGTH_LONG).show();
-                    dialog.dismiss();
-                }
-
-                if (TextUtils.isEmpty(quantity)) {
-                    Toast.makeText(getContext(), "Quantity cannot be empty", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
                 }
 

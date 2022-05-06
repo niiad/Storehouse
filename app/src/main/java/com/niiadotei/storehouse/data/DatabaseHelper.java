@@ -32,7 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "(id INTEGER primary key autoincrement, name TEXT, phone TEXT, location TEXT, date TEXT)";
 
         String createProductTableQuery = "create table " + productTableName +
-                "(id INTEGER primary key autoincrement, name TEXT, display TEXT, cost INTEGER, price INTEGER, quantity INTEGER, supplier INTEGER)";
+                "(id INTEGER primary key autoincrement, name TEXT, display TEXT, cost REAL, price REAL, quantity INTEGER, supplier INTEGER)";
 
         String createSupplierTableQuery = "create table " + supplierTableName +
                 "(id INTEGER primary key autoincrement, name TEXT, display TEXT, phone TEXT, location TEXT)";
@@ -87,7 +87,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.close();
     }
 
-    public void insertProduct(String productName, String productDisplayName, String cost, String price, String quantity, String supplier) {
+    public void insertProduct(String productName, String productDisplayName, double cost, double price, int quantity, int supplier) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -102,7 +102,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.close();
     }
 
-    public void insertSupply(String supplier, String product) {
+    public void insertSupply(int supplier, String product) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -142,13 +142,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updateProductQuantity(int id, int quantity) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
-        int newQuantity = getProductQuantityFromID(id);
-        newQuantity += quantity;
-        String query = "update " + productTableName + " set quantity='" + newQuantity + "' where id='" + id + "'";
+        int newQuantity = 0;
 
-        sqLiteDatabase.execSQL(query);
+        String query0 = "select * from " + productTableName;
+
+        Cursor cursor = sqLiteDatabase.rawQuery(query0, null);
+
+        int oldQuantity = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getInt(0) == id) {
+                    oldQuantity = cursor.getInt(5);
+
+                    cursor.close();
+                }
+            } while (cursor.moveToNext());
+        }
+
+        newQuantity = oldQuantity + quantity;
+        String query1 = "update " + productTableName + " set quantity='" + newQuantity + "' where id='" + id + "'";
+
+
+        sqLiteDatabase.execSQL(query1);
         sqLiteDatabase.close();
-
     }
 
     public void deleteCustomer(String id) {
@@ -413,19 +430,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    public String getSupplierID(String display) {
+    public int getSupplierID(String display) {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
 
         String query = "select * from " + supplierTableName;
 
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
 
-        String id = "";
+        int id = 0;
 
         if (cursor.moveToFirst()) {
             do {
                 if (cursor.getString(2).equals(display)) {
-                    id = cursor.getString(0);
+                    id = cursor.getInt(0);
 
                     cursor.close();
                     sqLiteDatabase.close();
@@ -525,12 +542,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return name;
     }
 
-    public int getProductQuantityFromID(int id) {
+    public String getProductFullNameFromID(int id) {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
 
         String query = "select * from " + productTableName;
 
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        String name = "";
+
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getInt(0) == id) {
+                    name = cursor.getString(1);
+
+                    cursor.close();
+                    sqLiteDatabase.close();
+
+                    return name;
+                }
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        sqLiteDatabase.close();
+
+        return name;
+    }
+
+    public int getProductQuantityFromID(int id) {
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+
+        String query0 = "select * from " + productTableName;
+
+        Cursor cursor = sqLiteDatabase.rawQuery(query0, null);
 
         int quantity = 0;
 
@@ -540,17 +585,58 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     quantity = cursor.getInt(5);
 
                     cursor.close();
-                    sqLiteDatabase.close();
-
-                    return quantity;
                 }
             } while (cursor.moveToNext());
         }
 
-        cursor.close();
         sqLiteDatabase.close();
-
         return quantity;
+    }
+
+    public double getProductCostFromID(int id) {
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+
+        String query0 = "select * from " + productTableName;
+
+        Cursor cursor = sqLiteDatabase.rawQuery(query0, null);
+
+        double cost = 0.00;
+
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getInt(0) == id) {
+                    cost = cursor.getDouble(3);
+
+                    cursor.close();
+                }
+            } while (cursor.moveToNext());
+        }
+
+        sqLiteDatabase.close();
+        return cost;
+    }
+
+    public double getProductPriceFromID(int id) {
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+
+        String query0 = "select * from " + productTableName;
+
+        Cursor cursor = sqLiteDatabase.rawQuery(query0, null);
+
+        double price = 0.00;
+
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getInt(0) == id) {
+                    price = cursor.getDouble(4);
+
+                    cursor.close();
+                }
+            } while (cursor.moveToNext());
+        }
+
+        sqLiteDatabase.close();
+        return price;
     }
 
     public JSONArray getFilteredCustomerArray(String name) {

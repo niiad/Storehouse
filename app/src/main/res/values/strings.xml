@@ -6,5 +6,7 @@
     <string name="title_stock">Stock</string>
     <string name="title_customers">Customers</string>
     <string name="title_apprentice">Apprentice</string>
+    <string name="supply_progress_hint">In progress</string>
+    <string name="received_progress_hint">Initiate supply first</string>
 
 </resources>

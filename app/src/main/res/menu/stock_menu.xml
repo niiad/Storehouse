@@ -7,4 +7,9 @@
         app:showAsAction="collapseActionView|ifRoom"
         app:actionViewClass="android.widget.SearchView" />
 
+    <item android:id="@+id/purchase_history"
+        android:title="@string/purchases_history"
+        android:icon="@drawable/ic_report"
+        app:showAsAction="collapseActionView|ifRoom" />
+
 </menu>

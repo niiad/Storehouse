@@ -82,26 +82,31 @@ public class SupplyChainFragment extends Fragment {
                 if (TextUtils.isEmpty(name)) {
                     Toast.makeText(getContext(), "Supplier name cannot be empty", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+                    return;
                 }
 
                 if (TextUtils.isEmpty(display)) {
                     Toast.makeText(getContext(), "Display name cannot be empty", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+                    return;
                 }
 
                 if (display.length() >= 15) {
                     Toast.makeText(getContext(), "Display name should be short", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+                    return;
                 }
 
                 if (TextUtils.isEmpty(phone)) {
                     Toast.makeText(getContext(), "Phone number is empty", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+                    return;
                 }
 
                 if (TextUtils.isEmpty(location)) {
                     Toast.makeText(getContext(), "Location cannot be empty", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+                    return;
                 }
 
                 databaseHelper.insertSupplier(name, display, phone, location);
@@ -167,11 +172,13 @@ public class SupplyChainFragment extends Fragment {
                 if (TextUtils.isEmpty(selectedDisplay[0])) {
                     Toast.makeText(getContext(), "Supplier display name cannot be empty", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+                    return;
                 }
 
                 if (TextUtils.isEmpty(selectedProductDisplay[0])) {
                     Toast.makeText(getContext(), "Product display name cannot be empty", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+                    return;
                 }
 
                 databaseHelper.insertSupply(id, productID);

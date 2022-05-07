@@ -8,5 +8,6 @@
     <string name="title_apprentice">Apprentice</string>
     <string name="supply_progress_hint">In progress</string>
     <string name="received_progress_hint">Initiate supply first</string>
+    <string name="purchases_history">Purchase History</string>
 
 </resources>

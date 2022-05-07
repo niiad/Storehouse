@@ -81,16 +81,19 @@ public class CustomersFragment extends Fragment {
                 if (TextUtils.isEmpty(name)) {
                     Toast.makeText(getContext(), "The name of the customer cannot be empty", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+                    return;
                 }
 
                 if (TextUtils.isEmpty(phone)) {
                     Toast.makeText(getContext(), "The customer should provide a phone number", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+                    return;
                 }
 
                 if (TextUtils.isEmpty(location)) {
                     Toast.makeText(getContext(), "The location of the customer should be provided", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+                    return;
                 }
 
                 databaseHelper.insertCustomer(name, phone, location, date);

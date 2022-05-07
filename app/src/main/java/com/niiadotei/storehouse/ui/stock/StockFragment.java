@@ -2,6 +2,7 @@ package com.niiadotei.storehouse.ui.stock;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -26,6 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.niiadotei.storehouse.R;
 import com.niiadotei.storehouse.data.DatabaseHelper;
 import com.niiadotei.storehouse.databinding.FragmentStockBinding;
+import com.niiadotei.storehouse.ui.purchases.PurchasesFragment;
 
 import java.text.DecimalFormat;
 
@@ -40,6 +44,8 @@ public class StockFragment extends Fragment {
     DatabaseHelper databaseHelper;
 
     private FragmentStockBinding binding;
+
+    private final Fragment purchasesFragment = new PurchasesFragment();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +122,7 @@ public class StockFragment extends Fragment {
                 } catch (NumberFormatException e) {
                     Toast.makeText(view1.getContext(), "Format not supported", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+                    return;
                 }
 
                 try {
@@ -124,6 +131,7 @@ public class StockFragment extends Fragment {
                 } catch (NumberFormatException e) {
                     Toast.makeText(view1.getContext(), "Format not supported", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+                    return;
                 }
 
                 try {
@@ -131,6 +139,7 @@ public class StockFragment extends Fragment {
                 } catch (NumberFormatException e) {
                     Toast.makeText(view1.getContext(), "Format not supported", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+                    return;
                 }
 
                 int id = databaseHelper.getSupplierID(selectedDisplay[0]);
@@ -138,16 +147,19 @@ public class StockFragment extends Fragment {
                 if (TextUtils.isEmpty(name)) {
                     Toast.makeText(getContext(), "Product name cannot be empty", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+                    return;
                 }
 
                 if (TextUtils.isEmpty(display)) {
                     Toast.makeText(getContext(), "Display name cannot be empty", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+                    return;
                 }
 
                 if (TextUtils.isEmpty(selectedDisplay[0])) {
                     Toast.makeText(getContext(), "Supplier cannot be empty", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+                    return;
                 }
 
                 databaseHelper.insertProduct(name, display, cost, price, quantity, id);
@@ -169,6 +181,8 @@ public class StockFragment extends Fragment {
         MenuItem search = menu.findItem(R.id.search_stock);
         SearchView searchView = (SearchView) search.getActionView();
 
+        MenuItem purchases = menu.findItem(R.id.purchase_history);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -183,6 +197,10 @@ public class StockFragment extends Fragment {
 
                 return false;
             }
+        });
+
+        purchases.setOnMenuItemClickListener(menuItem -> {
+            return false;
         });
     }
 

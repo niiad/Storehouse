@@ -1,5 +1,6 @@
 package com.niiadotei.storehouse.ui.finance;
 
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.niiadotei.storehouse.R;
@@ -34,10 +34,6 @@ public class FinanceViewModel extends RecyclerView.Adapter<FinanceViewModel.View
         this.jsonArray = jsonArray;
     }
 
-    public void updateArray(JSONArray jsonArray) {
-        this.jsonArray = jsonArray;
-    }
-
     @NonNull
     @Override
     public FinanceViewModel.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -54,7 +50,10 @@ public class FinanceViewModel extends RecyclerView.Adapter<FinanceViewModel.View
             JSONObject jsonObject = jsonArray.getJSONObject(position);
 
             DecimalFormat decimalFormat = new DecimalFormat("#.##");
-            NumberFormat currencyInstance = DecimalFormat.getCurrencyInstance(Locale.US);
+
+            Resources resources = holder.itemView.getContext().getResources();
+            Locale locale = resources.getConfiguration().locale;
+            NumberFormat currencyInstance = DecimalFormat.getCurrencyInstance(locale);
 
 
             holder.displayProductNameTextView.setText(jsonObject.getString("display"));

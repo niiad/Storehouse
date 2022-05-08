@@ -2,7 +2,6 @@ package com.niiadotei.storehouse.ui.stock;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -20,8 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -29,7 +27,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.niiadotei.storehouse.R;
 import com.niiadotei.storehouse.data.DatabaseHelper;
 import com.niiadotei.storehouse.databinding.FragmentStockBinding;
-import com.niiadotei.storehouse.ui.purchases.PurchasesFragment;
+import com.niiadotei.storehouse.ui.purchases.PurchasesViewModel;
 
 import java.text.DecimalFormat;
 
@@ -44,8 +42,6 @@ public class StockFragment extends Fragment {
     DatabaseHelper databaseHelper;
 
     private FragmentStockBinding binding;
-
-    private final Fragment purchasesFragment = new PurchasesFragment();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,9 +108,9 @@ public class StockFragment extends Fragment {
                 String name = productName.getText().toString().trim();
                 String display = productDisplay.getText().toString().trim();
 
-                double cost = 0.0;
-                double price = 0.0;
-                int quantity = 0;
+                double cost;
+                double price;
+                int quantity;
 
                 try {
                     cost = Double.parseDouble(productCost.getText().toString().trim());
@@ -200,6 +196,24 @@ public class StockFragment extends Fragment {
         });
 
         purchases.setOnMenuItemClickListener(menuItem -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+
+            LayoutInflater layoutInflater = getLayoutInflater();
+            View view = layoutInflater.inflate(R.layout.fragment_purchases, null);
+
+            RecyclerView recyclerView = view.findViewById(R.id.purchasesRecyclerView);
+            recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+            recyclerView.setHasFixedSize(true);
+
+            PurchasesViewModel purchasesViewModel = new PurchasesViewModel(this, databaseHelper.getPurchasesArray());
+            recyclerView.setAdapter(purchasesViewModel);
+
+            builder.setTitle("Purchase History");
+            builder.setView(view).setPositiveButton("Ok", null).setNegativeButton("Cancel", null);
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
             return false;
         });
     }

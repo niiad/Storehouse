@@ -16,7 +16,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/customerNameTextView"
+            android:id="@+id/purchasedCustomerNameTextView"
             android:textSize="20sp"
             android:textStyle="bold" />
 

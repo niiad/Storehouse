@@ -11,7 +11,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     final static String databaseName = "backstore_db";
@@ -41,7 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "(id INTEGER primary key autoincrement, supplier INTEGER, product INTEGER, quantity INTEGER)";
 
         String createPurchasesTableQuery = "create table " + purchasesTableName +
-                "(id INTEGER primary key autoincrement, customer INTEGER, product INTEGER, amount REAL, quantity INTEGER, date TEXT)";
+                "(id INTEGER primary key autoincrement, customer TEXT, product TEXT, amount REAL, quantity INTEGER, date TEXT)";
 
         sqLiteDatabase.execSQL(createCustomerTableQuery);
         sqLiteDatabase.execSQL(createSupplierTableQuery);
@@ -108,7 +107,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.close();
     }
 
-    public void insertPurchases(int customer, int product, double amount, int quantity, String date) {
+    public void insertPurchases(String customer, String product, double amount, int quantity, String date) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -141,28 +140,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.close();
     }
 
-    public void updateSupplier(String id, String name, String display, String phone, String location) {
-        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-
-        String query = "update " + supplierTableName + " set name='" + name + "', display='" + display + "', phone='" + phone + "', location'" + location + "' where id='" + id + "'";
-
-        sqLiteDatabase.execSQL(query);
-        sqLiteDatabase.close();
-    }
-
-    public void updateProduct(String id, String cost, String price) {
-        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-
-        String query = "update " + productTableName + " set cost='" + cost + "', price='" + price + "' where id='" + id + "'";
-
-        sqLiteDatabase.execSQL(query);
-        sqLiteDatabase.close();
-    }
-
     public void updateProductQuantity(int id, int quantity) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
-        int newQuantity = 0;
+        int newQuantity;
 
         String query0 = "select * from " + productTableName;
 
@@ -205,15 +186,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.close();
     }
 
-    public void deleteSupplier(String id) {
-        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-
-        String query = "delete from " + supplierTableName + " where id='" + id + "'";
-
-        sqLiteDatabase.execSQL(query);
-        sqLiteDatabase.close();
-    }
-
     public void deleteSupplyChain(String id) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
@@ -228,39 +200,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String query0 = "delete from " + customerTableName;
         String query1 = "delete from sqlite_sequence where name='" + customerTableName + "'";
-
-        sqLiteDatabase.execSQL(query0);
-        sqLiteDatabase.execSQL(query1);
-        sqLiteDatabase.close();
-    }
-
-    public void truncateProductTable() {
-        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-
-        String query0 = "delete from " + productTableName;
-        String query1 = "delete from sqlite_sequence where name='" + productTableName + "'";
-
-        sqLiteDatabase.execSQL(query0);
-        sqLiteDatabase.execSQL(query1);
-        sqLiteDatabase.close();
-    }
-
-    public void truncateSupplierTable() {
-        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-
-        String query0 = "delete from " + supplierTableName;
-        String query1 = "delete from sqlite_sequence where name='" + supplierTableName + "'";
-
-        sqLiteDatabase.execSQL(query0);
-        sqLiteDatabase.execSQL(query1);
-        sqLiteDatabase.close();
-    }
-
-    public void truncateSupplyChainTable() {
-        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-
-        String query0 = "delete from " + supplyChainTable;
-        String query1 = "delete from sqlite_sequence where name='" + supplyChainTable + "'";
 
         sqLiteDatabase.execSQL(query0);
         sqLiteDatabase.execSQL(query1);
@@ -350,8 +289,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 try {
                     jsonObject.put("id", cursor.getInt(0));
-                    jsonObject.put("customer", cursor.getInt(1));
-                    jsonObject.put("product", cursor.getInt(2));
+                    jsonObject.put("customer", cursor.getString(1));
+                    jsonObject.put("product", cursor.getString(2));
                     jsonObject.put("amount", cursor.getDouble(3));
                     jsonObject.put("quantity", cursor.getInt(4));
                     jsonObject.put("date", cursor.getString(5));
@@ -387,39 +326,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     jsonObject.put("supplier", cursor.getString(1));
                     jsonObject.put("product", cursor.getString(2));
                     jsonObject.put("quantity", cursor.getString(3));
-
-                    jsonArray.put(jsonObject);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        sqLiteDatabase.close();
-
-        return jsonArray;
-    }
-
-    public JSONArray getSupplierArray() {
-        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-
-        JSONArray jsonArray = new JSONArray();
-
-        String query = "select * from " + supplierTableName;
-
-        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                JSONObject jsonObject = new JSONObject();
-
-                try {
-                    jsonObject.put("id", cursor.getString(0));
-                    jsonObject.put("name", cursor.getString(1));
-                    jsonObject.put("display", cursor.getString(2));
-                    jsonObject.put("phone", cursor.getString(3));
-                    jsonObject.put("location", cursor.getString(4));
 
                     jsonArray.put(jsonObject);
                 } catch (JSONException e) {
@@ -621,40 +527,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return name;
     }
 
-    public String getProductFullNameFromID(int id) {
+    public int getProductQuantityFromID(int id) {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
 
         String query = "select * from " + productTableName;
 
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
-
-        String name = "";
-
-        if (cursor.moveToFirst()) {
-            do {
-                if (cursor.getInt(0) == id) {
-                    name = cursor.getString(1);
-
-                    cursor.close();
-                    sqLiteDatabase.close();
-
-                    return name;
-                }
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        sqLiteDatabase.close();
-
-        return name;
-    }
-
-    public int getProductQuantityFromID(int id) {
-        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-
-        String query0 = "select * from " + productTableName;
-
-        Cursor cursor = sqLiteDatabase.rawQuery(query0, null);
 
         int quantity = 0;
 
@@ -664,58 +542,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     quantity = cursor.getInt(5);
 
                     cursor.close();
+                    sqLiteDatabase.close();
+
+                    return quantity;
                 }
             } while (cursor.moveToNext());
         }
 
+        cursor.close();
         sqLiteDatabase.close();
+
         return quantity;
-    }
-
-    public double getProductCostFromID(int id) {
-        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-
-        String query0 = "select * from " + productTableName;
-
-        Cursor cursor = sqLiteDatabase.rawQuery(query0, null);
-
-        double cost = 0.00;
-
-        if (cursor.moveToFirst()) {
-            do {
-                if (cursor.getInt(0) == id) {
-                    cost = cursor.getDouble(3);
-
-                    cursor.close();
-                }
-            } while (cursor.moveToNext());
-        }
-
-        sqLiteDatabase.close();
-        return cost;
-    }
-
-    public double getProductPriceFromID(int id) {
-        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-
-        String query0 = "select * from " + productTableName;
-
-        Cursor cursor = sqLiteDatabase.rawQuery(query0, null);
-
-        double price = 0.00;
-
-        if (cursor.moveToFirst()) {
-            do {
-                if (cursor.getInt(0) == id) {
-                    price = cursor.getDouble(4);
-
-                    cursor.close();
-                }
-            } while (cursor.moveToNext());
-        }
-
-        sqLiteDatabase.close();
-        return price;
     }
 
     public JSONArray getFilteredCustomerArray(String name) {

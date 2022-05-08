@@ -219,7 +219,7 @@ public class SupplyChainViewModel extends RecyclerView.Adapter<SupplyChainViewMo
 
                 int quantity = sharedPreferences.getInt("quantity", 0);
 
-                supplyQuantityEditText.setText(Integer.toString(quantity));
+                supplyQuantityEditText.setText(String.valueOf(quantity));
                 supplyQuantityEditText.setEnabled(false);
 
                 receivedButton.setEnabled(true);

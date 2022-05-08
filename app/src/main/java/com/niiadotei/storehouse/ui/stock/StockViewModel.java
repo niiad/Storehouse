@@ -4,6 +4,7 @@ package com.niiadotei.storehouse.ui.stock;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -29,7 +30,9 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Locale;
 
 public class StockViewModel extends RecyclerView.Adapter<StockViewModel.ViewHolder> implements Filterable {
@@ -41,6 +44,7 @@ public class StockViewModel extends RecyclerView.Adapter<StockViewModel.ViewHold
     DatabaseHelper databaseHelper;
 
     public FilteredViewHolder filteredViewHolder;
+
 
     public StockViewModel(Fragment fragment, JSONArray jsonArray) {
         this.fragment = fragment;
@@ -66,14 +70,19 @@ public class StockViewModel extends RecyclerView.Adapter<StockViewModel.ViewHold
     @Override
     public void onBindViewHolder(@NonNull StockViewModel.ViewHolder holder, int position) {
         double price = 0.0;
+        int id = 0;
 
         try {
             JSONObject jsonObject = jsonArray.getJSONObject(position);
 
+            id = jsonObject.getInt("id");
+
             holder.displayNameTextView.setText(jsonObject.getString("display"));
             holder.nameTextView.setText(jsonObject.getString("name"));
 
-            NumberFormat currencyInstance = DecimalFormat.getCurrencyInstance(Locale.US);
+            Resources resources = holder.itemView.getContext().getResources();
+            Locale locale = resources.getConfiguration().locale;
+            NumberFormat currencyInstance = DecimalFormat.getCurrencyInstance(locale);
 
             price = jsonObject.getDouble("price");
             holder.priceTextView.setText(currencyInstance.format(price));
@@ -87,6 +96,7 @@ public class StockViewModel extends RecyclerView.Adapter<StockViewModel.ViewHold
         }
 
         double finalPrice = price;
+        int finalId = id;
         holder.itemView.setOnClickListener(view -> {
             String[] customers = databaseHelper.getAllCustomersWithPhone();
             Arrays.sort(customers);
@@ -125,17 +135,28 @@ public class StockViewModel extends RecyclerView.Adapter<StockViewModel.ViewHold
             makePurchase.setOnClickListener(view1 -> {
                 try {
                     int quantity = Integer.parseInt(editText.getText().toString().trim());
+                    int stockQuantity = databaseHelper.getProductQuantityFromID(finalId);
 
                     if (quantity == 0) {
                         Toast.makeText(holder.itemView.getContext(), "Quantity cannot be 0", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
+                        return;
+                    }
+
+                    if (quantity > stockQuantity) {
+                        Toast.makeText(holder.itemView.getContext(), "Stock quantity not enough to make purchase", Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                        return;
                     }
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(fragment.getActivity());
                     builder.setTitle("Confirm");
 
                     double totalPurchaseCost = finalPrice * quantity;
-                    NumberFormat currencyInstance = DecimalFormat.getCurrencyInstance(Locale.US);
+
+                    Resources resources = holder.itemView.getContext().getResources();
+                    Locale locale = resources.getConfiguration().locale;
+                    NumberFormat currencyInstance = DecimalFormat.getCurrencyInstance(locale);
 
                     builder.setMessage("Collect from the customer, a total cost of " + currencyInstance.format(totalPurchaseCost) + " before confirming.");
 
@@ -146,6 +167,8 @@ public class StockViewModel extends RecyclerView.Adapter<StockViewModel.ViewHold
                             int productID = jsonObject.getInt("id");
 
                             databaseHelper.updateProductQuantity(productID, -quantity);
+
+                            databaseHelper.insertPurchases(selectedCustomer[0], holder.nameTextView.getText().toString(), totalPurchaseCost, quantity, new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date()));
 
                             Toast.makeText(holder.itemView.getContext(), "Purchase successfully made", Toast.LENGTH_LONG).show();
 

@@ -9,7 +9,7 @@ public class ApprenticeViewModel extends ViewModel {
 
     public ApprenticeViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is apprentice fragment");
+        mText.setValue("The apprentice is an artificial intelligence that will help you better manage your stock and supply and understand your customers.");
     }
 
     public LiveData<String> getText() {

@@ -155,8 +155,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 if (cursor.getInt(0) == id) {
                     oldQuantity = cursor.getInt(5);
-
-                    cursor.close();
                 }
             } while (cursor.moveToNext());
         }
@@ -166,6 +164,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         sqLiteDatabase.execSQL(query1);
+        cursor.close();
         sqLiteDatabase.close();
     }
 

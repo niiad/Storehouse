@@ -2,6 +2,8 @@ package com.niiadotei.storehouse.ui.supplychain;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -123,6 +125,9 @@ public class SupplyChainFragment extends Fragment {
             dialog.setContentView(R.layout.dialog_supply_chain);
             dialog.show();
 
+            final String[] productNameUnderSupply = new String[1];
+
+
             Button chooseSupplier = dialog.findViewById(R.id.chooseSupplierButton);
             chooseSupplier.setOnClickListener(view1 -> {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
@@ -152,6 +157,8 @@ public class SupplyChainFragment extends Fragment {
                     selectedProductDisplay[0] = productDisplays[i];
 
                     chooseProduct.setText(selectedProductDisplay[0]);
+
+                    productNameUnderSupply[0] = selectedProductDisplay[0];
                     dialogInterface.dismiss();
                 });
 
@@ -184,6 +191,16 @@ public class SupplyChainFragment extends Fragment {
                 databaseHelper.insertSupply(id, productID);
 
                 supplyChainViewModel.updateArray(databaseHelper.getSupplyChainArray());
+
+                SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("supplyChain", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                String productSupplyValue = productNameUnderSupply[0];
+                String productQuantityValue = productNameUnderSupply[0] + "Quantity";
+                editor.putInt(productQuantityValue, 0);
+                editor.putBoolean(productSupplyValue, false);
+
+                editor.apply();
 
                 dialog.dismiss();
             });

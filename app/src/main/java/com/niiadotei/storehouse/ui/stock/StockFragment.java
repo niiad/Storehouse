@@ -147,13 +147,13 @@ public class StockFragment extends Fragment {
                 }
 
                 if (TextUtils.isEmpty(display)) {
-                    Toast.makeText(getContext(), "Display name cannot be empty", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Display name cannot be empty and must be at least 15 characters long", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
                     return;
                 }
 
                 if (TextUtils.isEmpty(selectedDisplay[0])) {
-                    Toast.makeText(getContext(), "Supplier cannot be empty", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Supplier cannot be empty. Add one from the supply chain page.", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
                     return;
                 }

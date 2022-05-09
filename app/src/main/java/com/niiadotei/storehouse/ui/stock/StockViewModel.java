@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,6 +147,11 @@ public class StockViewModel extends RecyclerView.Adapter<StockViewModel.ViewHold
                     if (quantity > stockQuantity) {
                         Toast.makeText(holder.itemView.getContext(), "Stock quantity not enough to make purchase", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
+                        return;
+                    }
+
+                    if (TextUtils.isEmpty(selectedCustomer[0])) {
+                        Toast.makeText(holder.itemView.getContext(), "Customer cannot be empty. Add one before making the purchase", Toast.LENGTH_LONG).show();
                         return;
                     }
 

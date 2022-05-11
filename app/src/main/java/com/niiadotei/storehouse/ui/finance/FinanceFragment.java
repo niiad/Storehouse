@@ -2,6 +2,8 @@ package com.niiadotei.storehouse.ui.finance;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -10,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.niiadotei.storehouse.R;
 import com.niiadotei.storehouse.data.DatabaseHelper;
 import com.niiadotei.storehouse.databinding.FragmentFinanceBinding;
 
@@ -21,6 +24,12 @@ public class FinanceFragment extends Fragment {
     FinanceViewModel financeViewModel;
 
     private FragmentFinanceBinding binding;
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -38,7 +47,13 @@ public class FinanceFragment extends Fragment {
         return binding.getRoot();
     }
 
-    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.finance_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+        @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;

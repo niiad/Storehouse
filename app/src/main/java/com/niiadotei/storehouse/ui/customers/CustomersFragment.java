@@ -151,6 +151,8 @@ public class CustomersFragment extends Fragment {
 
     }
 
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

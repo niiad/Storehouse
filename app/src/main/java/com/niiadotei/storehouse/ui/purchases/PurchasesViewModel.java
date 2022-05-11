@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.niiadotei.storehouse.R;
@@ -22,14 +22,14 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class PurchasesViewModel extends RecyclerView.Adapter<PurchasesViewModel.ViewHolder> {
-    Fragment fragment;
+    AppCompatActivity appCompatActivity;
 
     JSONArray jsonArray;
 
     DatabaseHelper databaseHelper;
 
-    public PurchasesViewModel(Fragment fragment, JSONArray jsonArray) {
-        this.fragment = fragment;
+    public PurchasesViewModel(AppCompatActivity appCompatActivity, JSONArray jsonArray) {
+        this.appCompatActivity = appCompatActivity;
         this.jsonArray = jsonArray;
     }
 

@@ -9,5 +9,14 @@
     <string name="supply_progress_hint">In progress</string>
     <string name="received_progress_hint">Initiate supply first</string>
     <string name="purchases_history">Purchase History</string>
+    <string name="stock_menu">Menu</string>
+    <string name="drawer_menu">Menu</string>
+    <string name="supply_notify">Notification</string>
+    <string name="supply_history">Supply History</string>
+    <string name="apprentice_note">Note</string>
+    <string name="supplier_list">Suppliers</string>
+    <string name="employee_list">Employees</string>
+    <string name="finance_note">Finance Notes</string>
+    <string name="blockchain_item">Supply Blockchain</string>
 
 </resources>

@@ -9,6 +9,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -36,6 +38,12 @@ public class SupplyChainFragment extends Fragment {
     RecyclerView recyclerView;
 
     private FragmentSupplyChainBinding binding;
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -209,6 +217,11 @@ public class SupplyChainFragment extends Fragment {
 
 
         return binding.getRoot();
+    }
+
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.supply_chain_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

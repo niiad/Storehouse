@@ -2,20 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/blockchain_list"
-        android:title="@string/blockchain_item"
-        android:icon="@drawable/ic_block_chain"
-        app:showAsAction="collapseActionView|ifRoom" />
-
     <item android:id="@+id/suppliers_list"
         android:title="@string/supplier_list"
         android:icon="@drawable/ic_suppliers"
         app:showAsAction="never" />
-
-    <item android:id="@+id/supply_notification"
-        android:title="@string/supply_notify"
-        android:icon="@drawable/ic_notification"
-        app:showAsAction="collapseActionView|ifRoom" />
 
     <item android:id="@+id/supply_history"
         android:title="@string/supply_history"

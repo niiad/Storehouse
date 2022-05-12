@@ -2,13 +2,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/apprentice_notes"
-        android:title="@string/apprentice_note"
-        android:icon="@drawable/ic_notes"
-        app:showAsAction="collapseActionView|ifRoom" />
-
-    <item android:id="@+id/drawer_menu"
-        android:title="@string/drawer_menu"
-        android:icon="@drawable/ic_dashboard"
-        app:showAsAction="always" />
 </menu>

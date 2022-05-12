@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="faq_header_1">How to change the currency</string>
+    <string name="faq_message_1">The currency depends on your system\'s language locale. To change:\n
+    1. Go to general management under Settings\n
+    2. Select Language and change to your preference.</string>
+
+    <string name="faq_header_2">Is Storehouse free to use?</string>
+    <string name="faq_message_2">Storehouse is free to download and use for the first three months
+    from launch. Afterwards, to use Storehouse, you have to pay for it.</string>
+
+    <string name="faq_header_3">Why is Storehouse paid?</string>
+    <string name="faq_message_3">Storehouse is not a complete application and the developer wants to
+    ensure Storehouse keeps up with modern innovations and advancements by releasing frequent updates,
+    bug fixes and exciting new features. Making Storehouse paid enables the developer to provide
+    you the users with up to date and well maintained product.</string>
+
+</resources>

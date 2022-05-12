@@ -28,7 +28,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    android:text="@string/app_name"
+                    android:id="@+id/drawerUsername"
+                    android:text="@string/drawer_username"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -36,7 +37,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:text="Your ID"
+                    android:id="@+id/drawerID"
+                    android:text="@string/drawer_id"
                     android:textSize="12sp"
                     android:textStyle="normal" />
 
@@ -51,7 +53,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="16dp"
                     android:id="@+id/drawerSignIn"
-                    android:text="Sign in"
+                    android:text="@string/drawer_sign_in"
                     android:textSize="16sp"
                     android:textStyle="normal"
                     android:padding="12dp"
@@ -62,7 +64,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:padding="12dp"
-                    android:text="Frequently Asked Questions"
+                    android:id="@+id/drawer_faq"
+                    android:text="@string/drawer_faq"
                     android:textSize="16sp"
                     android:textStyle="normal" />
 
@@ -71,7 +74,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:padding="12dp"
-                    android:text="How To"
+                    android:id="@+id/drawerHowTo"
+                    android:text="@string/drawer_how_to"
                     android:textSize="16sp"
                     android:textStyle="normal" />
 
@@ -80,7 +84,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:padding="12dp"
-                    android:text="About us"
+                    android:id="@+id/drawerAboutUs"
+                    android:text="@string/drawer_about_us"
                     android:textSize="16sp"
                     android:textStyle="normal" />
 

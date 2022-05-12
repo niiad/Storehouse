@@ -18,5 +18,8 @@
     <string name="employee_list">Employees</string>
     <string name="finance_note">Finance Notes</string>
     <string name="blockchain_item">Supply Blockchain</string>
+    <string name="sign_in_business_name">Business name</string>
+    <string name="sign_in_password">Password</string>
+    <string name="sign_in_button">Sign in</string>
 
 </resources>

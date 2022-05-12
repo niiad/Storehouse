@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="drawer_username">Your business name</string>
+    <string name="drawer_id">Your ID</string>
+    <string name="drawer_sign_in">Sign in</string>
+    <string name="drawer_faq">Frequently Asked Questions</string>
+    <string name="drawer_how_to">How To</string>
+    <string name="drawer_about_us">About us</string>
+</resources>

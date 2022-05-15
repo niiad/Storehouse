@@ -37,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "(id INTEGER primary key autoincrement, name TEXT, display TEXT, phone TEXT, location TEXT)";
 
         String createSupplyTableQuery = "create table " + supplyChainTable +
-                "(id INTEGER primary key autoincrement, supplier INTEGER, product INTEGER, quantity INTEGER)";
+                "(id INTEGER primary key autoincrement, supplier INTEGER, product INTEGER, quantity INTEGER, request TEXT, received TEXT)";
 
         String createPurchasesTableQuery = "create table " + purchasesTableName +
                 "(id INTEGER primary key autoincrement, customer TEXT, product TEXT, amount REAL, quantity INTEGER, date TEXT)";
@@ -167,6 +167,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         sqLiteDatabase.close();
     }
+
+    public void updateSupply(int product, int quantity, String request, String received) {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        String query = "update " + supplyChainTable + " set quantity='" + quantity + "', request='" + request + "', received='" + received + "' where product='" + product + "'";
+        sqLiteDatabase.execSQL(query);
+        sqLiteDatabase.close();
+    }
+
 
     public void deleteCustomer(String id) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
@@ -358,6 +367,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     jsonObject.put("supplier", cursor.getString(1));
                     jsonObject.put("product", cursor.getString(2));
                     jsonObject.put("quantity", cursor.getString(3));
+                    jsonObject.put("request", cursor.getString(4));
+                    jsonObject.put("received", cursor.getString(5));
 
                     jsonArray.put(jsonObject);
                 } catch (JSONException e) {

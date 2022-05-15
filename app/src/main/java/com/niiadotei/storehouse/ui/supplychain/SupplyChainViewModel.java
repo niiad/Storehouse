@@ -27,6 +27,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class SupplyChainViewModel extends RecyclerView.Adapter<SupplyChainViewModel.ViewHolder> implements Filterable {
     Fragment fragment;
 
@@ -102,6 +106,11 @@ public class SupplyChainViewModel extends RecyclerView.Adapter<SupplyChainViewMo
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
                     String supplyQuantityView = holder.suppliedProductTextView.getText().toString() + "Quantity";
+
+                    String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                    String request = holder.suppliedProductTextView.getText().toString() + "Request";
+
+                    editor.putString(request, date);
                     editor.putInt(supplyQuantityView, quantity[0]);
                     editor.apply();
 
@@ -140,7 +149,13 @@ public class SupplyChainViewModel extends RecyclerView.Adapter<SupplyChainViewMo
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
                     String supplyQuantityView = holder.suppliedProductTextView.getText().toString() + "Quantity";
+                    String request = holder.suppliedProductTextView.getText().toString() + "Request";
+
+                    String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+
                     databaseHelper.updateProductQuantity(product, sharedPreferences.getInt(supplyQuantityView, 0));
+                    databaseHelper.updateSupply(product, sharedPreferences.getInt(supplyQuantityView, 0), sharedPreferences.getString(request, ""), date);
+
                     Toast.makeText(view.getContext(), "Supply successful!", Toast.LENGTH_LONG).show();
 
                     holder.supplyButton.setEnabled(true);

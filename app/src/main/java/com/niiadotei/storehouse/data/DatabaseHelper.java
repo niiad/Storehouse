@@ -238,6 +238,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return jsonArray;
     }
 
+    public JSONArray getSuppliersArray() {
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+
+        JSONArray jsonArray = new JSONArray();
+
+        String query = "select * from " + supplierTableName;
+
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                JSONObject jsonObject = new JSONObject();
+
+                try {
+                    jsonObject.put("id", cursor.getInt(0));
+                    jsonObject.put("name", cursor.getString(1));
+                    jsonObject.put("display", cursor.getString(2));
+                    jsonObject.put("phone", cursor.getString(3));
+                    jsonObject.put("location", cursor.getString(4));
+
+                    jsonArray.put(jsonObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        sqLiteDatabase.close();
+
+        return jsonArray;
+    }
+
     public JSONArray getProductArray() {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
 

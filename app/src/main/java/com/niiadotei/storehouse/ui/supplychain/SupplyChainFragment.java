@@ -3,6 +3,7 @@ package com.niiadotei.storehouse.ui.supplychain;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -11,6 +12,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -26,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.niiadotei.storehouse.R;
 import com.niiadotei.storehouse.data.DatabaseHelper;
 import com.niiadotei.storehouse.databinding.FragmentSupplyChainBinding;
+import com.niiadotei.storehouse.ui.suppliers.SuppliersActivity;
 
 public class SupplyChainFragment extends Fragment {
     FloatingActionButton addSupplierFAB;
@@ -222,6 +225,14 @@ public class SupplyChainFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.supply_chain_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+
+        MenuItem suppliers = menu.findItem(R.id.suppliers_list);
+        suppliers.setOnMenuItemClickListener(menuItem -> {
+            Intent intent = new Intent(getActivity(), SuppliersActivity.class);
+            requireActivity().startActivity(intent);
+
+            return false;
+        });
     }
 
     @Override

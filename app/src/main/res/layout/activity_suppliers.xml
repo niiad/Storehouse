@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="8dp"
-    android:id="@+id/purchasesFragment"
-    tools:context=".ui.purchases.PurchasesActivity">
+    android:id="@+id/suppliersActivity"
+    tools:context=".ui.suppliers.SuppliersActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/purchasesRecyclerView"
+        android:id="@+id/suppliersRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="758dp"
         android:layout_alignParentStart="true"
@@ -19,6 +19,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="64dp"
-        tools:listitem="@layout/item_customer" />
+        tools:listitem="@layout/item_suppliers" />
 
 </RelativeLayout>

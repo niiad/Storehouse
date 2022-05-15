@@ -75,6 +75,9 @@ public class SupplyChainViewModel extends RecyclerView.Adapter<SupplyChainViewMo
             holder.suppliedProductTextView.setText(databaseHelper.getProductNameFromID(jsonObject.getInt("product")));
             holder.supplierTextView.setText(databaseHelper.getSupplierNameFromID(jsonObject.getString("supplier")));
 
+            String request = holder.suppliedProductTextView.getText().toString() + "Request";
+            holder.requestTextView.setText(sharedPreferences.getString(request, ""));
+
             boolean supplyAlreadyProgress = sharedPreferences.getBoolean(holder.suppliedProductTextView.getText().toString(), false);
 
             if (supplyAlreadyProgress) {
@@ -108,7 +111,6 @@ public class SupplyChainViewModel extends RecyclerView.Adapter<SupplyChainViewMo
                     String supplyQuantityView = holder.suppliedProductTextView.getText().toString() + "Quantity";
 
                     String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-                    String request = holder.suppliedProductTextView.getText().toString() + "Request";
 
                     editor.putString(request, date);
                     editor.putInt(supplyQuantityView, quantity[0]);
@@ -149,7 +151,6 @@ public class SupplyChainViewModel extends RecyclerView.Adapter<SupplyChainViewMo
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
                     String supplyQuantityView = holder.suppliedProductTextView.getText().toString() + "Quantity";
-                    String request = holder.suppliedProductTextView.getText().toString() + "Request";
 
                     String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
@@ -168,6 +169,8 @@ public class SupplyChainViewModel extends RecyclerView.Adapter<SupplyChainViewMo
                     holder.receivedButton.setEnabled(false);
                     holder.receivedButton.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.primary_light));
                     holder.receivedButton.setText(R.string.received_progress_hint);
+
+                    holder.requestTextView.setText("");
 
                     editor.putBoolean(holder.suppliedProductTextView.getText().toString(), false);
                     editor.apply();
@@ -234,6 +237,7 @@ public class SupplyChainViewModel extends RecyclerView.Adapter<SupplyChainViewMo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView suppliedProductTextView;
         TextView supplierTextView;
+        TextView requestTextView;
         EditText supplyQuantityEditText;
         Button supplyButton;
         Button receivedButton;
@@ -244,6 +248,7 @@ public class SupplyChainViewModel extends RecyclerView.Adapter<SupplyChainViewMo
 
             suppliedProductTextView = itemView.findViewById(R.id.displaySuppliedProductName);
             supplierTextView = itemView.findViewById(R.id.displaySupplierName);
+            requestTextView = itemView.findViewById(R.id.requestTextView);
             supplyQuantityEditText = itemView.findViewById(R.id.supply_quantity);
             supplyButton = itemView.findViewById(R.id.supply_button);
             receivedButton = itemView.findViewById(R.id.received_button);

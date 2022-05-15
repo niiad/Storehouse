@@ -88,7 +88,7 @@ public class StockViewModel extends RecyclerView.Adapter<StockViewModel.ViewHold
             price = jsonObject.getDouble("price");
             holder.priceTextView.setText(currencyInstance.format(price));
 
-            holder.supplierTextView.setText(databaseHelper.getSupplierNameFromID(jsonObject.getString("supplier")));
+            holder.supplierTextView.setText(databaseHelper.getSupplierNameFromID(jsonObject.getInt("supplier")));
 
             String quantity = "Qty: " + jsonObject.getString("quantity");
             holder.quantityTextView.setText(quantity);

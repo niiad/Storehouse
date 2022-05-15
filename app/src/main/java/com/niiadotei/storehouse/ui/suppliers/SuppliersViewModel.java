@@ -44,8 +44,13 @@ public class SuppliersViewModel extends RecyclerView.Adapter<SuppliersViewModel.
             JSONObject jsonObject = jsonArray.getJSONObject(position);
 
             holder.supplierNameTextView.setText(jsonObject.getString("name"));
-            holder.supplierPhoneNumberTextView.setText(jsonObject.getString("phone"));
-            holder.supplierLocationTextView.setText(jsonObject.getString("location"));
+
+            String phone = "Contact: " + jsonObject.getString("phone");
+            holder.supplierPhoneNumberTextView.setText(phone);
+
+            String location = "Location: " + jsonObject.getString("location");
+            holder.supplierLocationTextView.setText(location);
+
             holder.supplierDisplayNameTextView.setText(jsonObject.getString("display"));
         } catch (JSONException e) {
             e.printStackTrace();

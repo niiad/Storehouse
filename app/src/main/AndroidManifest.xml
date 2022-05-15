@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".ui.suppliers.SuppliersActivity" />
         <activity android:name=".ui.purchases.PurchasesActivity" />
+        <activity android:name=".ui.supplies.SuppliesActivity" />
     </application>
 
 </manifest>

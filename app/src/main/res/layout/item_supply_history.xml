@@ -16,30 +16,38 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/supplierNameTextView"
+            android:id="@+id/suppliedProductNameTextView"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/supplierPhoneNumberTextView"
+            android:id="@+id/suppliedSupplierNameTextView"
+            android:textSize="16sp"
+            android:textStyle="italic" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textSize="15sp"
+            android:id="@+id/suppliedQuantityTextView"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/supplierLocationTextView"
+            android:id="@+id/suppliedRequestTextView"
             android:textSize="12sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="4dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/supplierDisplayNameTextView"
-            android:textStyle="italic"
+            android:id="@+id/suppliedReceivedTextView"
+            android:textSize="12sp"
+            android:gravity="end"
             android:layout_marginTop="4dp"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 

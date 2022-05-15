@@ -29,6 +29,7 @@ import com.niiadotei.storehouse.R;
 import com.niiadotei.storehouse.data.DatabaseHelper;
 import com.niiadotei.storehouse.databinding.FragmentSupplyChainBinding;
 import com.niiadotei.storehouse.ui.suppliers.SuppliersActivity;
+import com.niiadotei.storehouse.ui.supplies.SuppliesActivity;
 
 public class SupplyChainFragment extends Fragment {
     FloatingActionButton addSupplierFAB;
@@ -229,6 +230,14 @@ public class SupplyChainFragment extends Fragment {
         MenuItem suppliers = menu.findItem(R.id.suppliers_list);
         suppliers.setOnMenuItemClickListener(menuItem -> {
             Intent intent = new Intent(getActivity(), SuppliersActivity.class);
+            requireActivity().startActivity(intent);
+
+            return false;
+        });
+
+        MenuItem supplies = menu.findItem(R.id.supply_history);
+        supplies.setOnMenuItemClickListener(menuItem -> {
+            Intent intent = new Intent(getActivity(), SuppliesActivity.class);
             requireActivity().startActivity(intent);
 
             return false;

@@ -514,7 +514,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public String getSupplierNameFromID(String id) {
+    public String getSupplierNameFromID(int id) {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
 
         String query = "select * from " + supplierTableName;
@@ -525,7 +525,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                if (cursor.getString(0).equals(id)) {
+                if (cursor.getInt(0) == id) {
                     name = cursor.getString(2);
 
                     cursor.close();

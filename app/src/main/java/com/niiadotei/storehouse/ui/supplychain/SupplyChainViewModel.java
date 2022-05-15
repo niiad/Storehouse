@@ -73,7 +73,7 @@ public class SupplyChainViewModel extends RecyclerView.Adapter<SupplyChainViewMo
             int product = jsonObject.getInt("product");
 
             holder.suppliedProductTextView.setText(databaseHelper.getProductNameFromID(jsonObject.getInt("product")));
-            holder.supplierTextView.setText(databaseHelper.getSupplierNameFromID(jsonObject.getString("supplier")));
+            holder.supplierTextView.setText(databaseHelper.getSupplierNameFromID(jsonObject.getInt("supplier")));
 
             String request = holder.suppliedProductTextView.getText().toString() + "Request";
             holder.requestTextView.setText(sharedPreferences.getString(request, ""));

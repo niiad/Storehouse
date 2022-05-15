@@ -58,12 +58,14 @@ public class PurchasesViewModel extends RecyclerView.Adapter<PurchasesViewModel.
             Locale locale = resources.getConfiguration().locale;
             NumberFormat currencyInstance = DecimalFormat.getCurrencyInstance(locale);
 
-            holder.purchasedPriceTextView.setText(currencyInstance.format(amount));
+            String cost = "Amount paid: " + currencyInstance.format(amount);
+            holder.purchasedPriceTextView.setText(cost);
 
-            int quantity = jsonObject.getInt("quantity");
-            holder.purchasedQuantityTextView.setText(String.valueOf(quantity));
+            String quantity = "Quantity purchased: " + jsonObject.getInt("quantity");
+            holder.purchasedQuantityTextView.setText(quantity);
 
-            holder.purchasedDateTextView.setText(jsonObject.getString("date"));
+            String date = "Date of purchase: " + jsonObject.getString("date");
+            holder.purchasedDateTextView.setText(date);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -63,9 +63,15 @@ public class CustomersViewModel extends RecyclerView.Adapter<CustomersViewModel.
             JSONObject jsonObject = jsonArray.getJSONObject(position);
 
             holder.customerNameTextView.setText(jsonObject.getString("name"));
-            holder.phoneNumberTextView.setText(jsonObject.getString("phone"));
-            holder.locationTextView.setText(jsonObject.getString("location"));
-            holder.dateTextView.setText(jsonObject.getString("date"));
+
+            String contact = "Contact: " + jsonObject.getString("phone");
+            holder.phoneNumberTextView.setText(contact);
+
+            String location = "Location: " + jsonObject.getString("location");
+            holder.locationTextView.setText(location);
+
+            String date = "Date added: " + jsonObject.getString("date");
+            holder.dateTextView.setText(date);
         } catch (JSONException e) {
             e.printStackTrace();
         }

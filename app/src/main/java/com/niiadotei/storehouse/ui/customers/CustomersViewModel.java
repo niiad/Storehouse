@@ -22,9 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.niiadotei.storehouse.R;
 import com.niiadotei.storehouse.data.DatabaseHelper;
-import com.niiadotei.storehouse.databinding.ActivityCustomerPurchasesBinding;
 import com.niiadotei.storehouse.ui.customers.purchases.CustomerPurchasesActivity;
-import com.niiadotei.storehouse.ui.customers.purchases.CustomerPurchasesViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;

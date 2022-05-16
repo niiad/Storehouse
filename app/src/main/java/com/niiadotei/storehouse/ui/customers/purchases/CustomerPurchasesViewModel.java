@@ -50,7 +50,9 @@ public class CustomerPurchasesViewModel extends RecyclerView.Adapter<CustomerPur
 
             holder.customerPurchasedDateTextView.setText(jsonObject.getString("date"));
             holder.customerPurchasedProductTextView.setText(jsonObject.getString("product"));
-            holder.customerPurchasedQuantityTextView.setText(String.valueOf(jsonObject.getInt("quantity")));
+
+            String quantity = "Quantity purchased: " + jsonObject.getInt("quantity");
+            holder.customerPurchasedQuantityTextView.setText(quantity);
 
             Resources resources = holder.itemView.getContext().getResources();
             Locale locale = resources.getConfiguration().locale;

@@ -77,45 +77,7 @@ public class CustomersViewModel extends RecyclerView.Adapter<CustomersViewModel.
         }
 
         holder.itemView.setOnClickListener(view -> {
-            try {
-                JSONObject jsonObject = jsonArray.getJSONObject(holder.getAdapterPosition());
 
-                String idFromArray = jsonObject.getString("id");
-                String nameFromArray = jsonObject.getString("name");
-                String phoneNumberFromArray = jsonObject.getString("phone");
-                String locationFromArray = jsonObject.getString("location");
-
-                Dialog dialog = new Dialog(fragment.getActivity());
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.setContentView(R.layout.dialog_customer);
-                dialog.show();
-
-                EditText nameEditText = dialog.findViewById(R.id.customerNameEditText);
-                EditText phoneEditText = dialog.findViewById(R.id.phoneNumberEditText);
-                EditText locationEditText = dialog.findViewById(R.id.locationEditText);
-                Button updateCustomerButton = dialog.findViewById(R.id.addCustomerButton);
-
-                nameEditText.setText(nameFromArray);
-                nameEditText.setInputType(InputType.TYPE_NULL);
-                nameEditText.setTextIsSelectable(false);
-
-                phoneEditText.setText(phoneNumberFromArray);
-                locationEditText.setText(locationFromArray);
-                updateCustomerButton.setText(R.string.update_button);
-
-                updateCustomerButton.setOnClickListener(view1 -> {
-                    String updatedPhoneNumber = phoneEditText.getText().toString().trim();
-                    String updatedLocation = locationEditText.getText().toString().trim();
-
-                    databaseHelper.updateCustomer(idFromArray, updatedPhoneNumber, updatedLocation);
-                    updateArray(databaseHelper.getCustomerArray());
-                    notifyItemChanged(holder.getAdapterPosition());
-                    dialog.dismiss();
-                });
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
         });
 
         holder.itemView.setOnLongClickListener(view -> {
@@ -137,7 +99,45 @@ public class CustomersViewModel extends RecyclerView.Adapter<CustomersViewModel.
                     notifyItemRangeChanged(getPosition, jsonArray.length());
                 });
 
-                builder.setNegativeButton("No", ((dialogInterface, i) -> dialogInterface.dismiss()));
+                builder.setNegativeButton("No", ((dialogInterface, i) -> {
+                    try {
+                        String idFromArray = jsonObject.getString("id");
+                        String nameFromArray = jsonObject.getString("name");
+                        String phoneNumberFromArray = jsonObject.getString("phone");
+                        String locationFromArray = jsonObject.getString("location");
+
+                        Dialog dialog = new Dialog(fragment.getActivity());
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.setContentView(R.layout.dialog_customer);
+                        dialog.show();
+
+                        EditText nameEditText = dialog.findViewById(R.id.customerNameEditText);
+                        EditText phoneEditText = dialog.findViewById(R.id.phoneNumberEditText);
+                        EditText locationEditText = dialog.findViewById(R.id.locationEditText);
+                        Button updateCustomerButton = dialog.findViewById(R.id.addCustomerButton);
+
+                        nameEditText.setText(nameFromArray);
+                        nameEditText.setInputType(InputType.TYPE_NULL);
+                        nameEditText.setTextIsSelectable(false);
+
+                        phoneEditText.setText(phoneNumberFromArray);
+                        locationEditText.setText(locationFromArray);
+                        updateCustomerButton.setText(R.string.update_button);
+
+                        updateCustomerButton.setOnClickListener(view1 -> {
+                            String updatedPhoneNumber = phoneEditText.getText().toString().trim();
+                            String updatedLocation = locationEditText.getText().toString().trim();
+
+                            databaseHelper.updateCustomer(idFromArray, updatedPhoneNumber, updatedLocation);
+                            updateArray(databaseHelper.getCustomerArray());
+                            notifyItemChanged(holder.getAdapterPosition());
+                            dialog.dismiss();
+                        });
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }));
 
                 builder.show();
             } catch(JSONException e) {

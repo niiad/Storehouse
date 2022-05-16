@@ -3,6 +3,7 @@ package com.niiadotei.storehouse.ui.customers;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.InputType;
@@ -21,6 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.niiadotei.storehouse.R;
 import com.niiadotei.storehouse.data.DatabaseHelper;
+import com.niiadotei.storehouse.databinding.ActivityCustomerPurchasesBinding;
+import com.niiadotei.storehouse.ui.customers.purchases.CustomerPurchasesActivity;
+import com.niiadotei.storehouse.ui.customers.purchases.CustomerPurchasesViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -77,7 +81,18 @@ public class CustomersViewModel extends RecyclerView.Adapter<CustomersViewModel.
         }
 
         holder.itemView.setOnClickListener(view -> {
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(position);
 
+                String customer = jsonObject.getString("name") + ", " + jsonObject.getString("phone");
+
+                Intent intent = new Intent(view.getContext(), CustomerPurchasesActivity.class);
+                intent.putExtra("customer", customer);
+                view.getContext().startActivity(intent);
+
+            } catch(JSONException e) {
+                e.printStackTrace();
+            }
         });
 
         holder.itemView.setOnLongClickListener(view -> {

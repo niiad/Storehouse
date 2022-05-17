@@ -48,15 +48,23 @@ public class ApprenticeFragment extends Fragment {
         double totalSalesMade = getTotalSalesMadeToday();
         totalSalesMadeTextView.setText(currencyInstance.format(totalSalesMade));
 
+        TextView salesQuantityTextView = binding.salesQuantityTextView;
+        salesQuantityTextView.setText(String.valueOf(getTotalQuantitySoldToday()));
+
+        TextView salesNumberTextView = binding.salesNumberTextView;
+        salesNumberTextView.setText(String.valueOf(getTotalNumberOfSalesToday()));
+
+        TextView customerNumberTextView = binding.customerNumberTextView;
+        customerNumberTextView.setText(String.valueOf(getNumberOfNewCustomersToday()));
+
         return binding.getRoot();
     }
 
     private double getTotalSalesMadeToday() {
         String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        JSONArray jsonArray;
-        double totalSales = 0.0;
+        JSONArray jsonArray = databaseHelper.getPurchasesArrayFromDate(date);
 
-        jsonArray = databaseHelper.getPurchasesArrayFromDate(date);
+        double totalSales = 0.0;
 
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -69,6 +77,39 @@ public class ApprenticeFragment extends Fragment {
         }
 
         return totalSales;
+    }
+
+    private int getTotalQuantitySoldToday() {
+        String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        JSONArray jsonArray = databaseHelper.getPurchasesArrayFromDate(date);
+
+        int quantity = 0;
+
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                quantity += jsonObject.getInt("quantity");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return quantity;
+    }
+
+    private int getTotalNumberOfSalesToday() {
+        String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        JSONArray jsonArray = databaseHelper.getPurchasesArrayFromDate(date);
+
+        return jsonArray.length();
+    }
+
+    private int getNumberOfNewCustomersToday() {
+        String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        JSONArray jsonArray = databaseHelper.getCustomerArrayFromDate(date);
+
+        return jsonArray.length();
     }
 
     @Override

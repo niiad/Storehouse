@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="sales_made_title">Total Sales made Today</string>
+    <string name="sales_quantity_title">Total Quantities sold Today</string>
+    <string name="sales_number_title">Total number of sales Today</string>
+    <string name="customer_number_title">Number of new Customers Today</string>
 </resources>

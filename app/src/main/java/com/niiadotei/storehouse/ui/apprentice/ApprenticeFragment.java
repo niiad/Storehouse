@@ -1,5 +1,6 @@
 package com.niiadotei.storehouse.ui.apprentice;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,12 +9,24 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
+import com.niiadotei.storehouse.data.DatabaseHelper;
 import com.niiadotei.storehouse.databinding.FragmentApprenticeBinding;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class ApprenticeFragment extends Fragment {
     private FragmentApprenticeBinding binding;
+
+    DatabaseHelper databaseHelper;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,15 +36,39 @@ public class ApprenticeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ApprenticeViewModel apprenticeViewModel =
-                new ViewModelProvider(this).get(ApprenticeViewModel.class);
-
         binding = FragmentApprenticeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
 
-        final TextView textView = binding.textApprentice;
-        apprenticeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
+        databaseHelper = new DatabaseHelper(this.getActivity());
+
+        Resources resources = this.getResources();
+        Locale locale = resources.getConfiguration().locale;
+        NumberFormat currencyInstance = DecimalFormat.getCurrencyInstance(locale);
+
+        TextView totalSalesMadeTextView = binding.salesMadeTextView;
+        double totalSalesMade = getTotalSalesMadeToday();
+        totalSalesMadeTextView.setText(currencyInstance.format(totalSalesMade));
+
+        return binding.getRoot();
+    }
+
+    private double getTotalSalesMadeToday() {
+        String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        JSONArray jsonArray;
+        double totalSales = 0.0;
+
+        jsonArray = databaseHelper.getPurchasesArrayFromDate(date);
+
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                totalSales += jsonObject.getDouble("amount");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return totalSales;
     }
 
     @Override

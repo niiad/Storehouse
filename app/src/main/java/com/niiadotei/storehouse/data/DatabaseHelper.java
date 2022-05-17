@@ -383,6 +383,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return jsonArray;
     }
 
+    public JSONArray getPurchasesArrayFromDate(String date) {
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+
+        JSONArray jsonArray = new JSONArray();
+
+        String query = "select * from " + purchasesTableName + " where date='" + date + "'";
+
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                JSONObject jsonObject = new JSONObject();
+
+                try {
+                    jsonObject.put("id", cursor.getInt(0));
+                    jsonObject.put("customer", cursor.getString(1));
+                    jsonObject.put("product", cursor.getString(2));
+                    jsonObject.put("amount", cursor.getDouble(3));
+                    jsonObject.put("quantity", cursor.getInt(4));
+                    jsonObject.put("date", cursor.getString(5));
+
+                    jsonArray.put(jsonObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        sqLiteDatabase.close();
+
+        return jsonArray;
+    }
+
     public JSONArray getSupplyChainArray() {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
 

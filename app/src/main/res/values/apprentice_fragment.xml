@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="sales_today_title">Today\'s Sales</string>
     <string name="sales_made_title">Total Sales made Today</string>
     <string name="sales_quantity_title">Total Quantities sold Today</string>
     <string name="sales_number_title">Total number of sales Today</string>
     <string name="customer_number_title">Number of new Customers Today</string>
+
+    <string name="past_sales_title">Past Sales</string>
+    <string name="past_sales_made">Total Sales made</string>
+    <string name="past_quantity_sold">Total Quantities sold</string>
+    <string name="past_sales_number">Total number of sales</string>
+    <string name="past_customer_number">Number of new Customers Added</string>
+    <string name="sales_date_button">Pick a Date</string>
 </resources>

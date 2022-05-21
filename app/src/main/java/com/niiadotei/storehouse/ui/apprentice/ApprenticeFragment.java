@@ -1,15 +1,15 @@
 package com.niiadotei.storehouse.ui.apprentice;
 
+import android.app.DatePickerDialog;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import com.niiadotei.storehouse.data.DatabaseHelper;
@@ -18,6 +18,7 @@ import com.niiadotei.storehouse.databinding.FragmentApprenticeBinding;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -25,8 +26,6 @@ public class ApprenticeFragment extends Fragment{
     private FragmentApprenticeBinding binding;
 
     DatabaseHelper databaseHelper;
-
-    String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,19 +37,22 @@ public class ApprenticeFragment extends Fragment{
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentApprenticeBinding.inflate(inflater, container, false);
 
-        databaseHelper = new DatabaseHelper(this.getActivity());
-
-        Apprentice apprentice = new Apprentice(date, this.requireContext());
-
         Resources resources = this.getResources();
         Locale locale = resources.getConfiguration().locale;
         NumberFormat currencyInstance = DecimalFormat.getCurrencyInstance(locale);
 
-        Button salesDateButton = binding.salesDateButton;
-        salesDateButton.setOnClickListener(view -> {
-            DialogFragment datePicker = new DatePicker();
-            datePicker.show(getChildFragmentManager(), "Pick a date");
-        });
+        String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+
+        TextView pastSalesMadeTextView = binding.pastSalesMadeTextView;
+        TextView pastSalesQuantityTextView = binding.pastSalesQuantityTextView;
+        TextView pastSalesNumberTextView = binding.pastSalesNumberTextView;
+        TextView pastCustomerNumberTextView = binding.pastCustomerNumberTextView;
+
+        databaseHelper = new DatabaseHelper(this.getActivity());
+
+        Apprentice apprentice = new Apprentice(date, this.requireContext());
+
+        AppCompatButton salesDateButton = binding.salesDateButton;
 
         TextView totalSalesMadeTextView = binding.salesMadeTextView;
         double totalSalesMade = apprentice.getTotalSalesMadeToday();
@@ -65,10 +67,42 @@ public class ApprenticeFragment extends Fragment{
         TextView customerNumberTextView = binding.customerNumberTextView;
         customerNumberTextView.setText(String.valueOf(apprentice.getNumberOfNewCustomersToday()));
 
+        DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, year, month, day) -> {
+            Calendar calendar = Calendar.getInstance();
+
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.DAY_OF_MONTH, day);
+
+            String pastDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.getTime());
+
+            Apprentice apprenticePast = new Apprentice(pastDate, requireContext());
+
+            double pastTotalSalesMade = apprenticePast.getTotalSalesMadeToday();
+            pastSalesMadeTextView.setText(currencyInstance.format(pastTotalSalesMade));
+
+            pastSalesQuantityTextView.setText(String.valueOf(apprenticePast.getTotalQuantitySoldToday()));
+
+            pastSalesNumberTextView.setText(String.valueOf(apprenticePast.getTotalNumberOfSalesToday()));
+
+            pastCustomerNumberTextView.setText(String.valueOf(apprenticePast.getNumberOfNewCustomersToday()));
+
+        };
+
+        salesDateButton.setOnClickListener(view -> {
+            Calendar calendar = Calendar.getInstance();
+
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener, year, month, day);
+            datePickerDialog.show();
+
+        });
+
         return binding.getRoot();
     }
-
-
 
 
     @Override

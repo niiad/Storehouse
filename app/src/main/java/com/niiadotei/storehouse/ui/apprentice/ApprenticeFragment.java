@@ -47,6 +47,7 @@ public class ApprenticeFragment extends Fragment{
         TextView pastSalesQuantityTextView = binding.pastSalesQuantityTextView;
         TextView pastSalesNumberTextView = binding.pastSalesNumberTextView;
         TextView pastCustomerNumberTextView = binding.pastCustomerNumberTextView;
+        TextView dateOfPastSalesTextView = binding.dateOfPastSales;
 
         databaseHelper = new DatabaseHelper(this.getActivity());
 
@@ -77,6 +78,9 @@ public class ApprenticeFragment extends Fragment{
             String pastDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.getTime());
 
             Apprentice apprenticePast = new Apprentice(pastDate, requireContext());
+
+            String dateOfPastSales = "Date of Sales: " + pastDate;
+            dateOfPastSalesTextView.setText(dateOfPastSales);
 
             double pastTotalSalesMade = apprenticePast.getTotalSalesMadeToday();
             pastSalesMadeTextView.setText(currencyInstance.format(pastTotalSalesMade));

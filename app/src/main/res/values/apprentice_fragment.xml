@@ -7,6 +7,7 @@
     <string name="customer_number_title">Number of new Customers Today</string>
 
     <string name="past_sales_title">Past Sales</string>
+    <string name="past_sales_date">Date of Past Sales</string>
     <string name="past_sales_made">Total Sales made</string>
     <string name="past_quantity_sold">Total Quantities sold</string>
     <string name="past_sales_number">Total number of sales</string>

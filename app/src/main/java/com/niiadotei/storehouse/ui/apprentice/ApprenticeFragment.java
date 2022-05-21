@@ -51,22 +51,22 @@ public class ApprenticeFragment extends Fragment{
 
         databaseHelper = new DatabaseHelper(this.getActivity());
 
-        Apprentice apprentice = new Apprentice(date, this.requireContext());
+        ApprenticeRetriever apprenticeRetriever = new ApprenticeRetriever(date, this.requireContext());
 
         AppCompatButton salesDateButton = binding.salesDateButton;
 
         TextView totalSalesMadeTextView = binding.salesMadeTextView;
-        double totalSalesMade = apprentice.getTotalSalesMadeToday();
+        double totalSalesMade = apprenticeRetriever.getTotalSalesMadeToday();
         totalSalesMadeTextView.setText(currencyInstance.format(totalSalesMade));
 
         TextView salesQuantityTextView = binding.salesQuantityTextView;
-        salesQuantityTextView.setText(String.valueOf(apprentice.getTotalQuantitySoldToday()));
+        salesQuantityTextView.setText(String.valueOf(apprenticeRetriever.getTotalQuantitySoldToday()));
 
         TextView salesNumberTextView = binding.salesNumberTextView;
-        salesNumberTextView.setText(String.valueOf(apprentice.getTotalNumberOfSalesToday()));
+        salesNumberTextView.setText(String.valueOf(apprenticeRetriever.getTotalNumberOfSalesToday()));
 
         TextView customerNumberTextView = binding.customerNumberTextView;
-        customerNumberTextView.setText(String.valueOf(apprentice.getNumberOfNewCustomersToday()));
+        customerNumberTextView.setText(String.valueOf(apprenticeRetriever.getNumberOfNewCustomersToday()));
 
         DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, year, month, day) -> {
             Calendar calendar = Calendar.getInstance();
@@ -77,19 +77,19 @@ public class ApprenticeFragment extends Fragment{
 
             String pastDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.getTime());
 
-            Apprentice apprenticePast = new Apprentice(pastDate, requireContext());
+            ApprenticeRetriever apprenticeRetrieverPast = new ApprenticeRetriever(pastDate, requireContext());
 
             String dateOfPastSales = "Date of Sales: " + pastDate;
             dateOfPastSalesTextView.setText(dateOfPastSales);
 
-            double pastTotalSalesMade = apprenticePast.getTotalSalesMadeToday();
+            double pastTotalSalesMade = apprenticeRetrieverPast.getTotalSalesMadeToday();
             pastSalesMadeTextView.setText(currencyInstance.format(pastTotalSalesMade));
 
-            pastSalesQuantityTextView.setText(String.valueOf(apprenticePast.getTotalQuantitySoldToday()));
+            pastSalesQuantityTextView.setText(String.valueOf(apprenticeRetrieverPast.getTotalQuantitySoldToday()));
 
-            pastSalesNumberTextView.setText(String.valueOf(apprenticePast.getTotalNumberOfSalesToday()));
+            pastSalesNumberTextView.setText(String.valueOf(apprenticeRetrieverPast.getTotalNumberOfSalesToday()));
 
-            pastCustomerNumberTextView.setText(String.valueOf(apprenticePast.getNumberOfNewCustomersToday()));
+            pastCustomerNumberTextView.setText(String.valueOf(apprenticeRetrieverPast.getNumberOfNewCustomersToday()));
 
         };
 

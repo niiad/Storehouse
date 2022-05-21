@@ -8,7 +8,7 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
-class Apprentice(date: String, context: Context) {
+class ApprenticeRetriever(date: String, context: Context) {
     private val date: String
     private val databaseHelper: DatabaseHelper
 

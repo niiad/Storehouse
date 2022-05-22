@@ -9,11 +9,11 @@ import org.json.JSONException
 import org.json.JSONObject
 
 class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, databaseName, null, 1) {
-    var customerTableName = "customers"
-    var productTableName = "products"
-    var supplierTableName = "suppliers"
-    var purchasesTableName = "purchases"
-    var supplyChainTable = "supply"
+    private var customerTableName = "customers"
+    private var productTableName = "products"
+    private var supplierTableName = "suppliers"
+    private var purchasesTableName = "purchases"
+    private var supplyChainTable = "supply"
 
     override fun onCreate(sqLiteDatabase: SQLiteDatabase) {
         val createCustomerTableQuery = "create table " + customerTableName +
@@ -60,12 +60,7 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, databaseName
         contentValues.put("location", location)
         contentValues.put("date", date)
 
-        sqLiteDatabase.insertWithOnConflict(
-            customerTableName,
-            null,
-            contentValues,
-            SQLiteDatabase.CONFLICT_REPLACE
-        )
+        sqLiteDatabase.insertWithOnConflict(customerTableName, null, contentValues, SQLiteDatabase.CONFLICT_REPLACE)
 
         sqLiteDatabase.close()
     }
@@ -434,7 +429,6 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, databaseName
         get() {
             val sqLiteDatabase = readableDatabase
             val displays = ArrayList<String>()
-            var result: Array<String?>
             val query = "select * from $supplierTableName"
             val cursor = sqLiteDatabase.rawQuery(query, null)
             if (cursor.moveToFirst()) {
@@ -442,7 +436,7 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, databaseName
                     displays.add(cursor.getString(2))
                 } while (cursor.moveToNext())
             }
-            result = arrayOfNulls(displays.size)
+            var result: Array<String?> = arrayOfNulls(displays.size)
             result = displays.toArray(result)
             cursor.close()
             sqLiteDatabase.close()
@@ -452,7 +446,6 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, databaseName
         get() {
             val sqLiteDatabase = readableDatabase
             val customers = ArrayList<String>()
-            var result: Array<String?>
             val query = "select * from $customerTableName"
             val cursor = sqLiteDatabase.rawQuery(query, null)
             if (cursor.moveToFirst()) {
@@ -460,7 +453,7 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, databaseName
                     customers.add(cursor.getString(1) + ", " + cursor.getString(2))
                 } while (cursor.moveToNext())
             }
-            result = arrayOfNulls(customers.size)
+            var result: Array<String?> = arrayOfNulls(customers.size)
             result = customers.toArray(result)
             cursor.close()
             sqLiteDatabase.close()
@@ -470,7 +463,6 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, databaseName
         get() {
             val sqLiteDatabase = readableDatabase
             val displays = ArrayList<String>()
-            var result: Array<String?>
             val query = "select * from $productTableName"
             val cursor = sqLiteDatabase.rawQuery(query, null)
             if (cursor.moveToFirst()) {
@@ -478,7 +470,7 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, databaseName
                     displays.add(cursor.getString(2))
                 } while (cursor.moveToNext())
             }
-            result = arrayOfNulls(displays.size)
+            var result: Array<String?> = arrayOfNulls(displays.size)
             result = displays.toArray(result)
             cursor.close()
             sqLiteDatabase.close()

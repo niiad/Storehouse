@@ -65,12 +65,7 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, databaseName
         sqLiteDatabase.close()
     }
 
-    fun insertSupplier(
-        supplierName: String?,
-        supplierDisplayName: String?,
-        supplierPhone: String?,
-        supplierLocation: String?
-    ) {
+    fun insertSupplier(supplierName: String?, supplierDisplayName: String?, supplierPhone: String?, supplierLocation: String?) {
         val sqLiteDatabase = writableDatabase
 
         val contentValues = ContentValues()
@@ -80,37 +75,25 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, databaseName
         contentValues.put("phone", supplierPhone)
         contentValues.put("location", supplierLocation)
 
-        sqLiteDatabase.insertWithOnConflict(
-            supplierTableName,
-            null,
-            contentValues,
-            SQLiteDatabase.CONFLICT_REPLACE
-        )
+        sqLiteDatabase.insertWithOnConflict(supplierTableName, null, contentValues, SQLiteDatabase.CONFLICT_REPLACE)
+
         sqLiteDatabase.close()
     }
 
-    fun insertProduct(
-        productName: String?,
-        productDisplayName: String?,
-        cost: Double,
-        price: Double,
-        quantity: Int,
-        supplier: Int
-    ) {
+    fun insertProduct(productName: String?, productDisplayName: String?, cost: Double, price: Double, quantity: Int, supplier: Int) {
         val sqLiteDatabase = writableDatabase
+
         val contentValues = ContentValues()
+
         contentValues.put("name", productName)
         contentValues.put("display", productDisplayName)
         contentValues.put("cost", cost)
         contentValues.put("price", price)
         contentValues.put("quantity", quantity)
         contentValues.put("supplier", supplier)
-        sqLiteDatabase.insertWithOnConflict(
-            productTableName,
-            null,
-            contentValues,
-            SQLiteDatabase.CONFLICT_REPLACE
-        )
+
+        sqLiteDatabase.insertWithOnConflict(productTableName, null, contentValues, SQLiteDatabase.CONFLICT_REPLACE)
+        
         sqLiteDatabase.close()
     }
 

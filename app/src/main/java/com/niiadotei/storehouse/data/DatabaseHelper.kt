@@ -93,7 +93,7 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, databaseName
         contentValues.put("supplier", supplier)
 
         sqLiteDatabase.insertWithOnConflict(productTableName, null, contentValues, SQLiteDatabase.CONFLICT_REPLACE)
-        
+
         sqLiteDatabase.close()
     }
 

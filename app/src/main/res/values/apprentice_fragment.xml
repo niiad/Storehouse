@@ -15,5 +15,8 @@
     <string name="sales_date_button">Pick a Date</string>
 
     <string name="daily_sales_performance">Sale\'s Performance</string>
+    <string name="sales_performance_value">Performance in Value</string>
+    <string name="sales_performance_percent">Performance Percentage</string>
+    <string name="quantity_rate">Difference in Quantity Sold</string>
 
 </resources>

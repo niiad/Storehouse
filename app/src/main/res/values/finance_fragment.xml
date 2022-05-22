@@ -12,7 +12,7 @@
     <string name="quantity_stock_view">Quantity in stock</string>
     <string name="profit_percent_view">Profit %</string>
 
-    <string name="finance_product_title">Products Overview</string>
+    <string name="finance_product_title">Current Stock Valuation</string>
     <string name="finance_revenue_title">Revenue Overview</string>
 
     <string name="finance_daily_revenue_title">Daily Revenue</string>

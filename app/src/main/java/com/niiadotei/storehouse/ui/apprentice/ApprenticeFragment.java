@@ -49,6 +49,10 @@ public class ApprenticeFragment extends Fragment{
         TextView pastCustomerNumberTextView = binding.pastCustomerNumberTextView;
         TextView dateOfPastSalesTextView = binding.dateOfPastSales;
 
+        TextView salesPerformanceValueTextView = binding.salesPerformanceValue;
+        TextView salesPerformancePercentTextView = binding.salesPerformancePercent;
+        TextView differenceInQuantityTextView = binding.differenceInQuantitySold;
+
         databaseHelper = new DatabaseHelper(this.getActivity());
 
         ApprenticeRetriever apprenticeRetriever = new ApprenticeRetriever(date, this.requireContext());
@@ -91,6 +95,17 @@ public class ApprenticeFragment extends Fragment{
 
             pastCustomerNumberTextView.setText(String.valueOf(apprenticeRetrieverPast.getNumberOfNewCustomersToday()));
 
+            double salesPerformanceValue = totalSalesMade - pastTotalSalesMade;
+            salesPerformanceValueTextView.setText(currencyInstance.format(salesPerformanceValue));
+
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            double salesPerformancePercent = Double.parseDouble(decimalFormat.format(((totalSalesMade - pastTotalSalesMade)  / totalSalesMade) * 100));
+
+            String salesPerformancePercentString = String.format(Locale.US, "%.0f%%", salesPerformancePercent);
+            salesPerformancePercentTextView.setText(salesPerformancePercentString);
+
+            int differenceInQuantity = apprenticeRetriever.getTotalQuantitySoldToday() - apprenticeRetrieverPast.getTotalQuantitySoldToday();
+            differenceInQuantityTextView.setText(String.valueOf(differenceInQuantity));
         };
 
         salesDateButton.setOnClickListener(view -> {

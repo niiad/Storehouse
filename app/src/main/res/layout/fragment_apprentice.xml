@@ -339,8 +339,8 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_marginTop="2dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="60dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="8dp"
@@ -350,32 +350,35 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginBottom="24dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/costUnitView"
+                    android:id="@+id/salesPerformanceValueView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="24dp"
-                    android:text="@string/cost_unit_view"
-                    android:textSize="12sp"
+                    android:text="@string/sales_performance_value"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/totalCostView"
+                    android:id="@+id/salesPerformancePercentView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="8dp"
-                    android:text="@string/total_cost_view"
-                    android:textSize="12sp"
+                    android:text="@string/sales_performance_percent"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/costPricePerUnit"
+                    android:id="@+id/salesPerformanceValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -383,10 +386,10 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/costUnitView" />
+                    app:layout_constraintTop_toBottomOf="@+id/salesPerformanceValueView" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/totalCostPrice"
+                    android:id="@+id/salesPerformancePercent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -394,76 +397,22 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/totalCostView" />
+                    app:layout_constraintTop_toBottomOf="@+id/salesPerformancePercentView" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/sellingUnitView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="32dp"
-                    android:text="@string/selling_unit_view"
-                    android:textSize="12sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/costPricePerUnit" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/totalSellingView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/total_selling_view"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/totalCostPrice" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/sellingPricePerUnit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/sellingUnitView" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/totalSellingPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="8dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/totalSellingView" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/profitUnitView"
+                    android:id="@+id/differenceInQuantityView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="32dp"
-                    android:text="@string/profit_unit_view"
-                    android:textSize="12sp"
+                    android:text="@string/quantity_rate"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/sellingPricePerUnit" />
+                    app:layout_constraintTop_toBottomOf="@+id/salesPerformanceValue" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/totalProfitView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/total_profit_view"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/totalSellingPrice" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/profitPerUnit"
+                    android:id="@+id/differenceInQuantitySold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -471,62 +420,8 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/profitUnitView" />
+                    app:layout_constraintTop_toBottomOf="@+id/differenceInQuantityView" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/totalProfit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="8dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/totalProfitView" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/quantity_stock_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="32dp"
-                    android:text="@string/quantity_stock_view"
-                    android:textSize="12sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/profitPerUnit" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/profit_percent_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/profit_percent_view"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/totalProfit" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/quantityInStock"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/quantity_stock_view" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/profitPercent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="8dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/profit_percent_view" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>

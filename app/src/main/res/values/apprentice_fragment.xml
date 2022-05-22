@@ -13,4 +13,7 @@
     <string name="past_sales_number">Total number of sales</string>
     <string name="past_customer_number">Number of new Customers Added</string>
     <string name="sales_date_button">Pick a Date</string>
+
+    <string name="daily_sales_performance">Sale\'s Performance</string>
+
 </resources>

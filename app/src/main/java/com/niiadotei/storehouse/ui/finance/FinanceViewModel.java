@@ -88,6 +88,11 @@ public class FinanceViewModel extends RecyclerView.Adapter<FinanceViewModel.View
             holder.totalProfitTextView.setText(totalProfitValue);
 
             double profitPercent = Double.parseDouble(decimalFormat.format(profitPerUnit * 100)) / cost;
+
+            if (Double.isInfinite(profitPercent)) {
+                profitPercent = 100.00;
+            }
+
             String profitPercentValue = String.format(Locale.US, "%.0f%%", profitPercent);
             holder.profitPercentTextView.setText(profitPercentValue);
             holder.profitPercentTextView.setTextColor(ContextCompat.getColor(fragment.requireContext(), R.color.secondary_orange));

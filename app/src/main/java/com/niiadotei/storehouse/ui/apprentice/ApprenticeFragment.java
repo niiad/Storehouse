@@ -101,6 +101,10 @@ public class ApprenticeFragment extends Fragment{
             DecimalFormat decimalFormat = new DecimalFormat("#.##");
             double salesPerformancePercent = Double.parseDouble(decimalFormat.format(((totalSalesMade - pastTotalSalesMade)  / totalSalesMade) * 100));
 
+            if (Double.isNaN(salesPerformancePercent)) {
+                salesPerformancePercent = 0.0;
+            }
+
             String salesPerformancePercentString = String.format(Locale.US, "%.0f%%", salesPerformancePercent);
             salesPerformancePercentTextView.setText(salesPerformancePercentString);
 

@@ -12,7 +12,7 @@
     <string name="quantity_stock_view">Quantity in stock</string>
     <string name="profit_percent_view">Profit %</string>
 
-    <string name="finance_product_title">Current Stock Valuation</string>
+    <string name="finance_product_title">Stock Valuation</string>
     <string name="finance_revenue_title">Revenue Overview</string>
 
     <string name="finance_daily_revenue_title">Daily Revenue</string>
@@ -29,5 +29,10 @@
 
     <string name="product_overview_profitable_product_title">Profitable product</string>
     <string name="product_overview_profitable_price_title">Profitable product in value</string>
+
+    <string name="current_stock_value_title">Current Stock Value</string>
+    <string name="most_priced_product_title">Most Priced Product</string>
+    <string name="least_priced_product_title">Least Priced Product</string>
+    <string name="most_profitable_product_title">Most Profitable Product</string>
 
 </resources>

@@ -317,6 +317,7 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, databaseName
             val jsonArray = JSONArray()
 
             val query = "select * from $productTableName"
+
             val cursor = sqLiteDatabase.rawQuery(query, null)
             if (cursor.moveToFirst()) {
                 do {

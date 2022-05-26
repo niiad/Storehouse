@@ -224,8 +224,8 @@ public class SupplyChainViewModel extends RecyclerView.Adapter<SupplyChainViewMo
         return filteredViewHolder;
     }
 
-    public JSONArray getFilteredJsonArray(String string) {
-        // needs work
+    public JSONArray getFilteredJsonArray(String name) {
+
         return jsonArray;
     }
 

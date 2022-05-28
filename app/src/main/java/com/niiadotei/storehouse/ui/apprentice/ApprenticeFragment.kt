@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ApprenticeFragment : Fragment() {
-    private var binding: FragmentApprenticeBinding? = null
+    private lateinit var binding: FragmentApprenticeBinding
 
     var databaseHelper: DatabaseHelper? = null
 
@@ -41,32 +41,32 @@ class ApprenticeFragment : Fragment() {
 
         val date = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
 
-        val pastSalesMadeTextView: TextView? = binding?.pastSalesMadeTextView
-        val pastSalesQuantityTextView: TextView = binding!!.pastSalesQuantityTextView
-        val pastSalesNumberTextView: TextView = binding!!.pastSalesNumberTextView
-        val pastCustomerNumberTextView: TextView = binding!!.pastCustomerNumberTextView
-        val dateOfPastSalesTextView: TextView = binding!!.dateOfPastSales
-        val salesPerformanceValueTextView: TextView = binding!!.salesPerformanceValue
-        val salesPerformancePercentTextView: TextView = binding!!.salesPerformancePercent
-        val differenceInQuantityTextView: TextView = binding!!.differenceInQuantitySold
+        val pastSalesMadeTextView: TextView = binding.pastSalesMadeTextView
+        val pastSalesQuantityTextView: TextView = binding.pastSalesQuantityTextView
+        val pastSalesNumberTextView: TextView = binding.pastSalesNumberTextView
+        val pastCustomerNumberTextView: TextView = binding.pastCustomerNumberTextView
+        val dateOfPastSalesTextView: TextView = binding.dateOfPastSales
+        val salesPerformanceValueTextView: TextView = binding.salesPerformanceValue
+        val salesPerformancePercentTextView: TextView = binding.salesPerformancePercent
+        val differenceInQuantityTextView: TextView = binding.differenceInQuantitySold
 
         databaseHelper = DatabaseHelper(this.activity)
 
         val apprenticeRetriever = ApprenticeRetriever(date, requireContext())
 
-        val salesDateButton = binding!!.salesDateButton
-        val totalSalesMadeTextView: TextView = binding!!.salesMadeTextView
+        val salesDateButton = binding.salesDateButton
+        val totalSalesMadeTextView: TextView = binding.salesMadeTextView
 
         val totalSalesMade = apprenticeRetriever.getTotalSalesMadeToday()
         totalSalesMadeTextView.text = currencyInstance.format(totalSalesMade)
 
-        val salesQuantityTextView: TextView = binding!!.salesQuantityTextView
+        val salesQuantityTextView: TextView = binding.salesQuantityTextView
         salesQuantityTextView.text = apprenticeRetriever.getTotalQuantitySoldToday().toString()
 
-        val salesNumberTextView: TextView = binding!!.salesNumberTextView
+        val salesNumberTextView: TextView = binding.salesNumberTextView
         salesNumberTextView.text = apprenticeRetriever.getTotalNumberOfSalesToday().toString()
 
-        val customerNumberTextView: TextView = binding!!.customerNumberTextView
+        val customerNumberTextView: TextView = binding.customerNumberTextView
         customerNumberTextView.text = apprenticeRetriever.getNumberOfNewCustomersToday().toString()
 
         val dateSetListener = OnDateSetListener {
@@ -84,7 +84,7 @@ class ApprenticeFragment : Fragment() {
                 dateOfPastSalesTextView.text = dateOfPastSales
 
                 val pastTotalSalesMade = apprenticeRetrieverPast.getTotalSalesMadeToday()
-                pastSalesMadeTextView?.text = currencyInstance.format(pastTotalSalesMade)
+                pastSalesMadeTextView.text = currencyInstance.format(pastTotalSalesMade)
 
                 pastSalesQuantityTextView.text = apprenticeRetrieverPast.getTotalQuantitySoldToday().toString()
 
@@ -124,11 +124,7 @@ class ApprenticeFragment : Fragment() {
             datePickerDialog.show()
         }
 
-        return binding!!.root
+        return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
 }

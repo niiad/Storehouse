@@ -34,7 +34,8 @@ class CustomersViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Rec
     private lateinit var databaseHelper: DatabaseHelper
 
     private var filteredJsonArray: JSONArray
-    private var filteredViewHolder: FilteredViewHolder? = null
+
+    private lateinit var filteredViewHolder: FilteredViewHolder
 
     init {
         filteredJsonArray = JSONArray()
@@ -155,12 +156,7 @@ class CustomersViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Rec
     }
 
     override fun getFilter(): Filter {
-        if (filteredViewHolder == null) {
-            filteredJsonArray = jsonArray
-            filteredViewHolder = FilteredViewHolder(this, filteredJsonArray)
-        }
-
-        return filteredViewHolder!!
+        return filteredViewHolder
     }
 
     fun getFilteredJsonArray(name: String?): JSONArray {

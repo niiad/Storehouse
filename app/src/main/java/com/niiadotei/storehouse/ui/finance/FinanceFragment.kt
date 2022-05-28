@@ -17,15 +17,15 @@ import com.niiadotei.storehouse.databinding.FragmentFinanceBinding
 import java.text.DecimalFormat
 
 class FinanceFragment : Fragment() {
-    private var financeViewModel: FinanceViewModel? = null
-    private var binding: FragmentFinanceBinding? = null
+    private lateinit var financeViewModel: FinanceViewModel
+    private lateinit var binding: FragmentFinanceBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFinanceBinding.inflate(inflater, container, false)
 
         val databaseHelper = DatabaseHelper(this.activity)
@@ -36,34 +36,30 @@ class FinanceFragment : Fragment() {
         val locale = resources.configuration.locale
         val currencyInstance = DecimalFormat.getCurrencyInstance(locale)
 
-        val recyclerView = binding?.financeProductRecycler
-        recyclerView?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, true)
+        val recyclerView = binding.financeProductRecycler
+        recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, true)
 
         financeViewModel = FinanceViewModel(this, databaseHelper.productArray)
-        recyclerView?.adapter = financeViewModel
+        recyclerView.adapter = financeViewModel
 
-        val currentStockValueTextView: TextView? = binding?.currentStockValueTextView
-        currentStockValueTextView?.text = currencyInstance.format(accountant.getCurrentStockValue())
+        val currentStockValueTextView: TextView = binding.currentStockValueTextView
+        currentStockValueTextView.text = currencyInstance.format(accountant.getCurrentStockValue())
 
-        val mostPricedProductTextView: TextView = binding!!.mostPricedProductTextView
+        val mostPricedProductTextView: TextView = binding.mostPricedProductTextView
         mostPricedProductTextView.text = accountant.getMostPricedProductName()
 
-        val leastPricedProductTextView: TextView = binding!!.leastPricedProductTextView
+        val leastPricedProductTextView: TextView = binding.leastPricedProductTextView
         leastPricedProductTextView.text = accountant.getLeastPricedProductName()
 
-        val mostProfitableProductTextView: TextView = binding!!.mostProfitableProductTextView
+        val mostProfitableProductTextView: TextView = binding.mostProfitableProductTextView
         mostProfitableProductTextView.text = accountant.getMostProfitableProductName()
 
-        return binding?.root
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.finance_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
+    
 }

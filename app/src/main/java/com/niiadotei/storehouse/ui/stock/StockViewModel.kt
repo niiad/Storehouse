@@ -25,7 +25,6 @@ import java.util.*
 class StockViewModel(var fragment: Fragment, var jsonArray: JSONArray) : RecyclerView.Adapter<StockViewModel.ViewHolder>(), Filterable {
     private var filteredJsonArray: JSONArray
     private lateinit var databaseHelper: DatabaseHelper
-    private lateinit var filteredViewHolder: FilteredViewHolder
 
     init {
         filteredJsonArray = JSONArray()
@@ -189,7 +188,27 @@ class StockViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Recycle
     }
 
     override fun getFilter(): Filter {
-        return filteredViewHolder
+        return object: Filter() {
+            override fun performFiltering(charSequence: CharSequence): FilterResults {
+                val results = FilterResults()
+
+                filteredJsonArray = if (charSequence.isEmpty()) {
+                    jsonArray
+                } else {
+                    val filterPattern = charSequence.toString().trim { it <= ' ' }
+                    getFilteredJsonArray(filterPattern)
+                }
+
+                results.values = filteredJsonArray
+                return results
+            }
+
+            @SuppressLint("NotifyDataSetChanged")
+            override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
+                updateArray(filterResults.values as JSONArray)
+                notifyDataSetChanged()
+            }
+        }
     }
 
     fun getFilteredJsonArray(name: String?): JSONArray {
@@ -216,33 +235,5 @@ class StockViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Recycle
         }
     }
 
-    class FilteredViewHolder(private val stockViewModel: StockViewModel, private val jsonArray: JSONArray) : Filter() {
-        private var filteredJsonArray: JSONArray
-
-        init {
-            filteredJsonArray = JSONArray()
-        }
-
-        override fun performFiltering(charSequence: CharSequence): FilterResults {
-            val results = FilterResults()
-
-            filteredJsonArray = if (charSequence.isEmpty()) {
-                jsonArray
-            } else {
-                val filterPattern = charSequence.toString().trim { it <= ' ' }
-                stockViewModel.getFilteredJsonArray(filterPattern)
-            }
-
-            results.values = filteredJsonArray
-            return results
-        }
-
-        @SuppressLint("NotifyDataSetChanged")
-        override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
-            stockViewModel.updateArray(filterResults.values as JSONArray)
-            stockViewModel.notifyDataSetChanged()
-        }
-
-    }
 
 }

@@ -35,8 +35,6 @@ class CustomersViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Rec
 
     private var filteredJsonArray: JSONArray
 
-    private lateinit var filteredViewHolder: FilteredViewHolder
-
     init {
         filteredJsonArray = JSONArray()
     }
@@ -156,7 +154,27 @@ class CustomersViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Rec
     }
 
     override fun getFilter(): Filter {
-        return filteredViewHolder
+        return object: Filter() {
+            override fun performFiltering(charSequence: CharSequence): FilterResults {
+                val results = FilterResults()
+
+                filteredJsonArray = if (charSequence.isEmpty()) {
+                    jsonArray
+                } else {
+                    val filterPattern = charSequence.toString().trim { it <= ' ' }
+                    getFilteredJsonArray(filterPattern)
+                }
+
+                results.values = filteredJsonArray
+                return results
+            }
+
+            @SuppressLint("NotifyDataSetChanged")
+            override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
+                updateArray(filterResults.values as JSONArray)
+                notifyDataSetChanged()
+            }
+        }
     }
 
     fun getFilteredJsonArray(name: String?): JSONArray {
@@ -177,31 +195,4 @@ class CustomersViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Rec
         }
     }
 
-    class FilteredViewHolder(private val customersViewModel: CustomersViewModel, private val jsonArray: JSONArray) : Filter() {
-        private var filteredJsonArray: JSONArray
-
-        override fun performFiltering(charSequence: CharSequence): FilterResults {
-            val results = FilterResults()
-
-            filteredJsonArray = if (charSequence.isEmpty()) {
-                jsonArray
-            } else {
-                val filterPattern = charSequence.toString().trim { it <= ' ' }
-                customersViewModel.getFilteredJsonArray(filterPattern)
-            }
-
-            results.values = filteredJsonArray
-            return results
-        }
-
-        @SuppressLint("NotifyDataSetChanged")
-        override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
-            customersViewModel.updateArray(filterResults.values as JSONArray)
-            customersViewModel.notifyDataSetChanged()
-        }
-
-        init {
-            filteredJsonArray = JSONArray()
-        }
-    }
 }

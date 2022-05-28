@@ -43,9 +43,9 @@ class Accountant(context: Context) {
 
         try {
             for (i: Int in 0..jsonArray.length()) {
-                var jsonObject: JSONObject = jsonArray.getJSONObject(i)
+                val jsonObject: JSONObject = jsonArray.getJSONObject(i)
 
-                var price = jsonObject.getDouble("price")
+                val price = jsonObject.getDouble("price")
 
                 if (price > mostPriced) {
                     mostPriced = price
@@ -71,9 +71,9 @@ class Accountant(context: Context) {
             leastPriced = firstJSONObject.getDouble("price")
 
             for (i: Int in 0..jsonArray.length()) {
-                var jsonObject: JSONObject = jsonArray.getJSONObject(i)
+                val jsonObject: JSONObject = jsonArray.getJSONObject(i)
 
-                var price = jsonObject.getDouble("price")
+                val price = jsonObject.getDouble("price")
 
                 if (price <= leastPriced) {
                     leastPriced = price
@@ -97,13 +97,13 @@ class Accountant(context: Context) {
 
         try {
             for (i: Int in 0..jsonArray.length()) {
-                var jsonObject: JSONObject = jsonArray.getJSONObject(i)
+                val jsonObject: JSONObject = jsonArray.getJSONObject(i)
 
-                var cost: Double = jsonObject.getDouble("cost")
-                var price: Double = jsonObject.getDouble("price")
+                val cost: Double = jsonObject.getDouble("cost")
+                val price: Double = jsonObject.getDouble("price")
 
-                var profit: Double = decimalFormat.format(price - cost).toDouble()
-                var profitPercent: Double = decimalFormat.format((profit * 100) / cost).toDouble()
+                val profit: Double = decimalFormat.format(price - cost).toDouble()
+                val profitPercent: Double = decimalFormat.format((profit * 100) / cost).toDouble()
 
                 if (profitPercent > mostProfitable) {
                     mostProfitable = profitPercent

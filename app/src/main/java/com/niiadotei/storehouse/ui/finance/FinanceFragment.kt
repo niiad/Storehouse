@@ -61,5 +61,5 @@ class FinanceFragment : Fragment() {
         inflater.inflate(R.menu.finance_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
-    
+
 }

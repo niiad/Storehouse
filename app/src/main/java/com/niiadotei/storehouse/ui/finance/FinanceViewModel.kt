@@ -21,7 +21,7 @@ import org.json.JSONException
 import java.text.DecimalFormat
 
 class FinanceViewModel(var fragment: Fragment, var jsonArray: JSONArray) : RecyclerView.Adapter<FinanceViewModel.ViewHolder>() {
-    var databaseHelper: DatabaseHelper? = null
+    private lateinit var databaseHelper: DatabaseHelper
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_finance_product, parent, false)

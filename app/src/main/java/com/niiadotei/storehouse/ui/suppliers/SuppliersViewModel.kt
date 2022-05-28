@@ -11,7 +11,7 @@ import org.json.JSONException
 import android.widget.TextView
 
 class SuppliersViewModel(var jsonArray: JSONArray) : RecyclerView.Adapter<SuppliersViewModel.ViewHolder>() {
-    var databaseHelper: DatabaseHelper? = null
+    private lateinit var databaseHelper: DatabaseHelper
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_suppliers, parent, false)

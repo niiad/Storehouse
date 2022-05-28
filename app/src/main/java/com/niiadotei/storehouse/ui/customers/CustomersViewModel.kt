@@ -171,7 +171,13 @@ class CustomersViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Rec
 
             @SuppressLint("NotifyDataSetChanged")
             override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
-                updateArray(filterResults.values as JSONArray)
+
+                if (charSequence.isEmpty()) {
+                    updateArray(databaseHelper.customerArray)
+                } else {
+                    updateArray(filterResults.values as JSONArray)
+                }
+                
                 notifyDataSetChanged()
             }
         }

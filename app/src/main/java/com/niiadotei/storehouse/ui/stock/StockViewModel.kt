@@ -205,7 +205,14 @@ class StockViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Recycle
 
             @SuppressLint("NotifyDataSetChanged")
             override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
-                updateArray(filterResults.values as JSONArray)
+
+                if (charSequence.isEmpty()) {
+                    updateArray(databaseHelper.productArray)
+                } else {
+                    updateArray(filterResults.values as JSONArray)
+
+                }
+
                 notifyDataSetChanged()
             }
         }

@@ -41,7 +41,7 @@ class ApprenticeFragment : Fragment() {
 
         val date = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
 
-        val pastSalesMadeTextView: TextView = binding!!.pastSalesMadeTextView
+        val pastSalesMadeTextView: TextView? = binding?.pastSalesMadeTextView
         val pastSalesQuantityTextView: TextView = binding!!.pastSalesQuantityTextView
         val pastSalesNumberTextView: TextView = binding!!.pastSalesNumberTextView
         val pastCustomerNumberTextView: TextView = binding!!.pastCustomerNumberTextView
@@ -84,7 +84,7 @@ class ApprenticeFragment : Fragment() {
                 dateOfPastSalesTextView.text = dateOfPastSales
 
                 val pastTotalSalesMade = apprenticeRetrieverPast.getTotalSalesMadeToday()
-                pastSalesMadeTextView.text = currencyInstance.format(pastTotalSalesMade)
+                pastSalesMadeTextView?.text = currencyInstance.format(pastTotalSalesMade)
 
                 pastSalesQuantityTextView.text = apprenticeRetrieverPast.getTotalQuantitySoldToday().toString()
 

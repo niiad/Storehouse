@@ -177,7 +177,7 @@ class CustomersViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Rec
                 } else {
                     updateArray(filterResults.values as JSONArray)
                 }
-                
+
                 notifyDataSetChanged()
             }
         }

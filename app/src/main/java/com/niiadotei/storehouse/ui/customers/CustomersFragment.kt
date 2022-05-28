@@ -34,8 +34,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class CustomersFragment : Fragment() {
-    var customersViewModel: CustomersViewModel? = null
-    private var binding: FragmentCustomersBinding? = null
+    private lateinit var customersViewModel: CustomersViewModel
+    private lateinit var binding: FragmentCustomersBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,17 +45,17 @@ class CustomersFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentCustomersBinding.inflate(inflater, container, false)
 
-        val addCustomerFAB: FloatingActionButton? = binding?.addCustomerFAB
+        val addCustomerFAB: FloatingActionButton = binding.addCustomerFAB
 
         val databaseHelper: DatabaseHelper = DatabaseHelper(this.activity)
 
-        val recyclerView: RecyclerView? = binding?.customerRecyclerView
-        recyclerView?.layoutManager = LinearLayoutManager(activity)
+        val recyclerView: RecyclerView = binding.customerRecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(activity)
 
         customersViewModel = CustomersViewModel(this, databaseHelper.customerArray)
-        recyclerView?.adapter = customersViewModel
+        recyclerView.adapter = customersViewModel
 
-        addCustomerFAB?.setOnClickListener {
+        addCustomerFAB.setOnClickListener {
             val dialog = Dialog(requireContext())
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.setContentView(R.layout.dialog_customer)
@@ -92,28 +92,28 @@ class CustomersFragment : Fragment() {
                 }
 
                 databaseHelper.insertCustomer(name, phone, location, date)
-                customersViewModel?.updateArray(databaseHelper.customerArray)
+                customersViewModel.updateArray(databaseHelper.customerArray)
 
                 dialog.dismiss()
             }
         }
 
-        addCustomerFAB?.setOnLongClickListener {
+        addCustomerFAB.setOnLongClickListener {
             val builder = AlertDialog.Builder(context)
             builder.setTitle("Confirm")
             builder.setMessage("Are you sure you want to delete all customers?")
 
             builder.setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
                 databaseHelper.truncateCustomerTable()
-                customersViewModel?.updateArray(databaseHelper.customerArray)
-                recyclerView?.adapter = customersViewModel
+                customersViewModel.updateArray(databaseHelper.customerArray)
+                recyclerView.adapter = customersViewModel
             }
             builder.setNegativeButton("No") { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
             builder.show()
 
             true
         }
-        return binding?.root
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -125,19 +125,14 @@ class CustomersFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(s: String): Boolean {
-                customersViewModel?.filter?.filter(s)
+                customersViewModel.filter.filter(s)
                 return false
             }
 
             override fun onQueryTextChange(s: String): Boolean {
-                customersViewModel?.filter?.filter(s)
+                customersViewModel.filter.filter(s)
                 return false
             }
         })
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
     }
 }

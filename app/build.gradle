@@ -11,8 +11,8 @@ android {
         applicationId "com.niiadotei.storehouse"
         minSdk 23
         targetSdk 32
-        versionCode 3
-        versionName "1.00.02"
+        versionCode 4
+        versionName "1.00.03"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

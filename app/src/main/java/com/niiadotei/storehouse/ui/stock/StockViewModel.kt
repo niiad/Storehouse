@@ -90,7 +90,7 @@ class StockViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Recycle
 
             selectCustomer.setOnClickListener {
                 val alertDialog = AlertDialog.Builder(holder.itemView.context)
-                alertDialog.setTitle("Select the customer buying")
+                alertDialog.setTitle(R.string.select_customer_message)
                 alertDialog.setSingleChoiceItems(customers, checkedCustomer[0]) { dialogInterface: DialogInterface, i: Int ->
                     checkedCustomer[0] = i
                     selectedCustomer[0] = customers[i]
@@ -98,7 +98,7 @@ class StockViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Recycle
                     dialogInterface.dismiss()
                 }
 
-                alertDialog.setNegativeButton("Cancel") { _: DialogInterface?, _: Int -> }
+                alertDialog.setNegativeButton(R.string.negative_cancel_button) { _: DialogInterface?, _: Int -> }
                 val customerAlertDialog = alertDialog.create()
                 customerAlertDialog.show()
             }
@@ -109,24 +109,24 @@ class StockViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Recycle
                     val quantity = editText.text.toString().trim { it <= ' ' }.toInt()
                     val stockQuantity = databaseHelper.getProductQuantityFromID(finalId)
                     if (quantity == 0) {
-                        Toast.makeText(holder.itemView.context, "Quantity cannot be 0", Toast.LENGTH_LONG).show()
+                        Toast.makeText(holder.itemView.context, R.string.zero_quantity_message, Toast.LENGTH_LONG).show()
                         dialog.dismiss()
 
                         return@MakePurchase
                     }
                     if (quantity > stockQuantity) {
-                        Toast.makeText(holder.itemView.context, "Stock quantity not enough to make purchase", Toast.LENGTH_LONG).show()
+                        Toast.makeText(holder.itemView.context, R.string.quantity_not_enough_message, Toast.LENGTH_LONG).show()
                         dialog.dismiss()
 
                         return@MakePurchase
                     }
                     if (TextUtils.isEmpty(selectedCustomer[0])) {
-                        Toast.makeText(holder.itemView.context, "Customer cannot be empty. Add one before making the purchase", Toast.LENGTH_LONG).show()
+                        Toast.makeText(holder.itemView.context, R.string.empty_customer_message, Toast.LENGTH_LONG).show()
 
                         return@MakePurchase
                     }
                     val builder = AlertDialog.Builder(fragment.activity)
-                    builder.setTitle("Confirm")
+                    builder.setTitle(R.string.confirm_title)
                     val totalPurchaseCost = finalPrice * quantity
 
                     val resources = holder.itemView.context.resources
@@ -134,7 +134,7 @@ class StockViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Recycle
                     val currencyInstance = DecimalFormat.getCurrencyInstance(locale)
 
                     builder.setMessage("Collect from the customer, a total cost of " + currencyInstance.format(totalPurchaseCost) + " before confirming.")
-                    builder.setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
+                    builder.setPositiveButton(R.string.positive_button) { _: DialogInterface?, _: Int ->
                         try {
                             val jsonObject = jsonArray.getJSONObject(holder.adapterPosition)
 
@@ -144,18 +144,18 @@ class StockViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Recycle
 
                             databaseHelper.insertPurchases(selectedCustomer[0], holder.nameTextView.text.toString(), totalPurchaseCost, quantity, SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date()))
 
-                            Toast.makeText(holder.itemView.context, "Purchase successfully made", Toast.LENGTH_LONG).show()
+                            Toast.makeText(holder.itemView.context, R.string.purchase_success_message, Toast.LENGTH_LONG).show()
                             dialog.dismiss()
                         } catch (e: JSONException) {
-                            Toast.makeText(holder.itemView.context, "Error making the purchase", Toast.LENGTH_LONG).show()
+                            Toast.makeText(holder.itemView.context, R.string.purchase_error_message, Toast.LENGTH_LONG).show()
                             dialog.dismiss()
                         }
                     }
 
-                    builder.setNegativeButton("No") { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
+                    builder.setNegativeButton(R.string.negative_button) { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
                     builder.show()
                 } catch (e: NumberFormatException) {
-                    Toast.makeText(holder.itemView.context, "Quantity format not supported", Toast.LENGTH_LONG).show()
+
                 }
             }
         }
@@ -168,9 +168,9 @@ class StockViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Recycle
                 val stringID = jsonObject.getString("id")
 
                 val builder = AlertDialog.Builder(fragment.activity)
-                builder.setTitle("Confirm")
-                builder.setMessage("Are you sure you want to delete this product?")
-                builder.setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
+                builder.setTitle(R.string.confirm_title)
+                builder.setMessage(R.string.delete_product_message)
+                builder.setPositiveButton(R.string.positive_button) { _: DialogInterface?, _: Int ->
                     databaseHelper.deleteProduct(stringID)
 
                     jsonArray.remove(getPosition)
@@ -178,7 +178,7 @@ class StockViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Recycle
                     notifyItemRemoved(getPosition)
                     notifyItemRangeRemoved(getPosition, jsonArray.length())
                 }
-                builder.setNegativeButton("No") { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
+                builder.setNegativeButton(R.string.negative_button) { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
                 builder.show()
             } catch (e: JSONException) {
                 e.printStackTrace()

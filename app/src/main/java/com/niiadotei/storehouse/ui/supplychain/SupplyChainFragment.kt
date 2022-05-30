@@ -3,20 +3,20 @@ package com.niiadotei.storehouse.ui.supplychain
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
-import com.niiadotei.storehouse.data.DatabaseHelper
-import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import android.graphics.drawable.ColorDrawable
-import com.niiadotei.storehouse.R
-import android.widget.EditText
-import android.text.TextUtils
-import android.widget.Toast
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
+import android.text.TextUtils
 import android.view.*
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.niiadotei.storehouse.R
+import com.niiadotei.storehouse.data.DatabaseHelper
 import com.niiadotei.storehouse.databinding.FragmentSupplyChainBinding
 import com.niiadotei.storehouse.ui.suppliers.SuppliersActivity
 import com.niiadotei.storehouse.ui.supplies.SuppliesActivity
@@ -77,31 +77,31 @@ class SupplyChainFragment : Fragment() {
                 val location = supplierLocation.text.toString().trim { it <= ' ' }
 
                 if (TextUtils.isEmpty(name)) {
-                    Toast.makeText(context, "Supplier name cannot be empty", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.empty_supplier_name_message, Toast.LENGTH_LONG).show()
                     dialog.dismiss()
 
                     return@SupplierButton
                 }
                 if (TextUtils.isEmpty(display)) {
-                    Toast.makeText(context, "Display name cannot be empty", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.empty_display_name_message, Toast.LENGTH_LONG).show()
                     dialog.dismiss()
 
                     return@SupplierButton
                 }
                 if (display.length >= 15) {
-                    Toast.makeText(context, "Display name should be short", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.short_display_name_message, Toast.LENGTH_LONG).show()
                     dialog.dismiss()
 
                     return@SupplierButton
                 }
                 if (TextUtils.isEmpty(phone)) {
-                    Toast.makeText(context, "Phone number is empty", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.empty_phone_number_message, Toast.LENGTH_LONG).show()
                     dialog.dismiss()
 
                     return@SupplierButton
                 }
                 if (TextUtils.isEmpty(location)) {
-                    Toast.makeText(context, "Location cannot be empty", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.empty_location_message, Toast.LENGTH_LONG).show()
                     dialog.dismiss()
 
                     return@SupplierButton
@@ -122,7 +122,7 @@ class SupplyChainFragment : Fragment() {
             val chooseSupplier = dialog.findViewById<Button>(R.id.chooseSupplierButton)
             chooseSupplier.setOnClickListener {
                 val alertDialog = AlertDialog.Builder(context)
-                alertDialog.setTitle("Select supplier display name")
+                alertDialog.setTitle(R.string.select_supplier_display_message)
                 alertDialog.setSingleChoiceItems(displays, checkedDisplay[0]) { dialogInterface: DialogInterface, i: Int ->
                     checkedDisplay[0] = i
                     selectedDisplay[0] = displays[i]
@@ -131,7 +131,7 @@ class SupplyChainFragment : Fragment() {
                     dialogInterface.dismiss()
                 }
 
-                alertDialog.setNegativeButton("Cancel") { _: DialogInterface?, _: Int -> }
+                alertDialog.setNegativeButton(R.string.negative_cancel_button) { _: DialogInterface?, _: Int -> }
                 val displayAlertDialog = alertDialog.create()
                 displayAlertDialog.show()
             }
@@ -139,7 +139,7 @@ class SupplyChainFragment : Fragment() {
             val chooseProduct = dialog.findViewById<Button>(R.id.chooseProductButton)
             chooseProduct.setOnClickListener {
                 val alertDialog = AlertDialog.Builder(context)
-                alertDialog.setTitle("Select product display name")
+                alertDialog.setTitle(R.string.select_product_display_message)
                 alertDialog.setSingleChoiceItems(productDisplays, checkedProductDisplay[0]) { dialogInterface: DialogInterface, i: Int ->
                     checkedProductDisplay[0] = i
                     selectedProductDisplay[0] = productDisplays[i]
@@ -149,7 +149,7 @@ class SupplyChainFragment : Fragment() {
                     dialogInterface.dismiss()
                 }
 
-                alertDialog.setNegativeButton("Cancel") { _: DialogInterface?, _: Int -> }
+                alertDialog.setNegativeButton(R.string.negative_cancel_button) { _: DialogInterface?, _: Int -> }
                 val productDisplayAlertDialog = alertDialog.create()
                 productDisplayAlertDialog.show()
             }
@@ -160,13 +160,13 @@ class SupplyChainFragment : Fragment() {
                 val productID = databaseHelper.getProductID(selectedProductDisplay[0]!!)
 
                 if (TextUtils.isEmpty(selectedDisplay[0])) {
-                    Toast.makeText(context, "Supplier display name cannot be empty", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.empty_display_supplier_message, Toast.LENGTH_LONG).show()
                     dialog.dismiss()
 
                     return@SupplyButton
                 }
                 if (TextUtils.isEmpty(selectedProductDisplay[0])) {
-                    Toast.makeText(context, "Product display name cannot be empty", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.empty_display_product_message, Toast.LENGTH_LONG).show()
                     dialog.dismiss()
 
                     return@SupplyButton
@@ -174,6 +174,7 @@ class SupplyChainFragment : Fragment() {
 
                 databaseHelper.insertSupply(id, productID)
                 supplyChainViewModel.updateArray(databaseHelper.supplyChainArray)
+                recyclerView.adapter = supplyChainViewModel
 
                 val sharedPreferences = view.context.getSharedPreferences("supplyChain", Context.MODE_PRIVATE)
                 val editor = sharedPreferences.edit()

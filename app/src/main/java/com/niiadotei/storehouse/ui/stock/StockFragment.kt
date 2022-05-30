@@ -64,7 +64,7 @@ class StockFragment : Fragment() {
             val selectSupplier = dialog.findViewById<Button>(R.id.selectSupplierButton)
             selectSupplier.setOnClickListener {
                 val alertDialog = AlertDialog.Builder(context)
-                alertDialog.setTitle("Select supplier display name")
+                alertDialog.setTitle(R.string.select_supplier_display_message)
                 alertDialog.setSingleChoiceItems(displays, checkedDisplay[0]) { dialogInterface: DialogInterface, i: Int ->
                     checkedDisplay[0] = i
                     selectedDisplay[0] = displays[i]
@@ -73,7 +73,7 @@ class StockFragment : Fragment() {
                     dialogInterface.dismiss()
                 }
 
-                alertDialog.setNegativeButton("Cancel") { _: DialogInterface?, _: Int -> }
+                alertDialog.setNegativeButton(R.string.negative_cancel_button) { _: DialogInterface?, _: Int -> }
                 val displayAlertDialog = alertDialog.create()
                 displayAlertDialog.show()
             }
@@ -92,7 +92,7 @@ class StockFragment : Fragment() {
                     cost = productCost.text.toString().trim { it <= ' ' }.toDouble()
                     decimalFormat.format(cost)
                 } catch (e: NumberFormatException) {
-                    Toast.makeText(view1.context, "Format not supported", Toast.LENGTH_LONG).show()
+                    Toast.makeText(view1.context, R.string.format_error_message, Toast.LENGTH_LONG).show()
                     dialog.dismiss()
 
                     return@AddProduct
@@ -101,7 +101,7 @@ class StockFragment : Fragment() {
                     price = productPrice.text.toString().trim { it <= ' ' }.toDouble()
                     decimalFormat.format(price)
                 } catch (e: NumberFormatException) {
-                    Toast.makeText(view1.context, "Format not supported", Toast.LENGTH_LONG).show()
+                    Toast.makeText(view1.context, R.string.format_error_message, Toast.LENGTH_LONG).show()
                     dialog.dismiss()
 
                     return@AddProduct
@@ -110,7 +110,7 @@ class StockFragment : Fragment() {
                 val quantity: Int = try {
                     productQuantity.text.toString().trim { it <= ' ' }.toInt()
                 } catch (e: NumberFormatException) {
-                    Toast.makeText(view1.context, "Format not supported", Toast.LENGTH_LONG).show()
+                    Toast.makeText(view1.context, R.string.format_error_message, Toast.LENGTH_LONG).show()
                     dialog.dismiss()
 
                     return@AddProduct
@@ -118,19 +118,19 @@ class StockFragment : Fragment() {
 
                 val id = databaseHelper.getSupplierID(selectedDisplay[0]!!)
                 if (TextUtils.isEmpty(name)) {
-                    Toast.makeText(context, "Product name cannot be empty", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.empty_product_name_message, Toast.LENGTH_LONG).show()
                     dialog.dismiss()
 
                     return@AddProduct
                 }
                 if (TextUtils.isEmpty(display)) {
-                    Toast.makeText(context, "Display name cannot be empty and must be at least 15 characters long", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.empty_short_display_name_message, Toast.LENGTH_LONG).show()
                     dialog.dismiss()
 
                     return@AddProduct
                 }
                 if (TextUtils.isEmpty(selectedDisplay[0])) {
-                    Toast.makeText(context, "Supplier cannot be empty. Add one from the supply chain page.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.empty_supplier_with_tip_message, Toast.LENGTH_LONG).show()
                     dialog.dismiss()
 
                     return@AddProduct

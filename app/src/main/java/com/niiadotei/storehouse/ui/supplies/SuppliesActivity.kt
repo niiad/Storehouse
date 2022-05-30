@@ -1,10 +1,10 @@
 package com.niiadotei.storehouse.ui.supplies
 
-import androidx.appcompat.app.AppCompatActivity
-import com.niiadotei.storehouse.data.DatabaseHelper
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.niiadotei.storehouse.data.DatabaseHelper
 import com.niiadotei.storehouse.databinding.ActivitySuppliesBinding
 
 class SuppliesActivity : AppCompatActivity() {

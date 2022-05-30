@@ -92,15 +92,15 @@ class CustomersViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Rec
                 val stringID = jsonObject.getString("id")
 
                 val builder = AlertDialog.Builder(fragment.activity)
-                builder.setTitle("Confirm")
-                builder.setMessage("Are you sure you want to delete this customer?")
-                builder.setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
+                builder.setTitle(R.string.confirm_title)
+                builder.setMessage(R.string.delete_customer_message)
+                builder.setPositiveButton(R.string.positive_button) { _: DialogInterface?, _: Int ->
                     databaseHelper.deleteCustomer(stringID)
                     jsonArray.remove(getPosition)
                     notifyItemRemoved(getPosition)
                     notifyItemRangeChanged(getPosition, jsonArray.length())
                 }
-                builder.setNegativeButton("No") { _: DialogInterface?, _: Int ->
+                builder.setNegativeButton(R.string.negative_button) { _: DialogInterface?, _: Int ->
                     try {
                         val idFromArray = jsonObject.getString("id")
                         val nameFromArray = jsonObject.getString("name")

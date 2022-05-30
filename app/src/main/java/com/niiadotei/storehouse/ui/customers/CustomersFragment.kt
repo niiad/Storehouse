@@ -42,7 +42,7 @@ class CustomersFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCustomersBinding.inflate(inflater, container, false)
 
         val addCustomerFAB: FloatingActionButton = binding.addCustomerFAB
@@ -73,19 +73,19 @@ class CustomersFragment : Fragment() {
                 val date = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
 
                 if (TextUtils.isEmpty(name)) {
-                    Toast.makeText(context, "The name of the customer cannot be empty", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.empty_customer_name_message, Toast.LENGTH_LONG).show()
                     dialog.dismiss()
 
                     return@Dialog
                 }
                 if (TextUtils.isEmpty(phone)) {
-                    Toast.makeText(context, "The customer should provide a phone number", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.empty_customer_phone_message, Toast.LENGTH_LONG).show()
                     dialog.dismiss()
 
                     return@Dialog
                 }
                 if (TextUtils.isEmpty(location)) {
-                    Toast.makeText(context, "The location of the customer should be provided", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.empty_customer_location_message, Toast.LENGTH_LONG).show()
                     dialog.dismiss()
 
                     return@Dialog
@@ -100,15 +100,15 @@ class CustomersFragment : Fragment() {
 
         addCustomerFAB.setOnLongClickListener {
             val builder = AlertDialog.Builder(context)
-            builder.setTitle("Confirm")
-            builder.setMessage("Are you sure you want to delete all customers?")
+            builder.setTitle(R.string.confirm_title)
+            builder.setMessage(R.string.delete_all_customers_message)
 
-            builder.setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
+            builder.setPositiveButton(R.string.positive_button) { _: DialogInterface?, _: Int ->
                 databaseHelper.truncateCustomerTable()
                 customersViewModel.updateArray(databaseHelper.customerArray)
                 recyclerView.adapter = customersViewModel
             }
-            builder.setNegativeButton("No") { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
+            builder.setNegativeButton(R.string.negative_button) { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
             builder.show()
 
             true

@@ -103,10 +103,9 @@ class Accountant(context: Context) {
                 val price: Double = jsonObject.getDouble("price")
 
                 val profit: Double = decimalFormat.format(price - cost).toDouble()
-                val profitPercent: Double = decimalFormat.format((profit * 100) / cost).toDouble()
 
-                if (profitPercent > mostProfitable) {
-                    mostProfitable = profitPercent
+                if (profit > mostProfitable) {
+                    mostProfitable = profit
 
                     name = jsonObject.getString("display")
                 }

@@ -84,10 +84,10 @@ class SupplyChainViewModel(var fragment: Fragment, var jsonArray: JSONArray) : R
                     editor.putInt(supplyQuantityView, quantity[0])
                     editor.apply()
                 } catch (e: NumberFormatException) {
-                    Toast.makeText(view.context, "Format not supported", Toast.LENGTH_LONG).show()
+
                 }
                 if (TextUtils.isEmpty(quantityFromUser)) {
-                    Toast.makeText(view.context, "Quantity not given", Toast.LENGTH_LONG).show()
+                    Toast.makeText(view.context, R.string.quantity_not_given_message, Toast.LENGTH_LONG).show()
                     return@SupplyButton
                 }
 
@@ -122,7 +122,7 @@ class SupplyChainViewModel(var fragment: Fragment, var jsonArray: JSONArray) : R
 
                     databaseHelper.updateSupply(product, sharedPreferences.getInt(supplyQuantityView, 0), sharedPreferences.getString(request, "")!!, date)
 
-                    Toast.makeText(view.context, "Supply successful!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(view.context, R.string.supply_successful_message, Toast.LENGTH_LONG).show()
 
                     holder.supplyButton.isEnabled = true
                     holder.supplyButton.setText(R.string.supply_button)
@@ -156,10 +156,10 @@ class SupplyChainViewModel(var fragment: Fragment, var jsonArray: JSONArray) : R
                 val stringID = jsonObject.getString("id")
 
                 val builder = AlertDialog.Builder(fragment.activity)
-                builder.setTitle("Confirm")
-                builder.setMessage("Are you sure you want to delete this supply?")
+                builder.setTitle(R.string.confirm_title)
+                builder.setMessage(R.string.supply_delete_message)
 
-                builder.setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
+                builder.setPositiveButton(R.string.positive_button) { _: DialogInterface?, _: Int ->
                     databaseHelper.deleteSupplyChain(stringID)
 
                     jsonArray.remove(getPosition)
@@ -168,7 +168,7 @@ class SupplyChainViewModel(var fragment: Fragment, var jsonArray: JSONArray) : R
                     notifyItemRangeRemoved(getPosition, jsonArray.length())
                 }
 
-                builder.setNegativeButton("No") { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
+                builder.setNegativeButton(R.string.negative_button) { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
                 builder.show()
             } catch (e: JSONException) {
                 e.printStackTrace()

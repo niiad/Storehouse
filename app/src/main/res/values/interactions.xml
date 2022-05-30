@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="confirm_title">Confirm</string>
+    <string name="supply_delete_message">Are you sure you want to delete this supply?</string>
+    <string name="supply_successful_message">Supply Successful!</string>
+    <string name="quantity_not_given_message">Quantity not given</string>
+
+    <string name="empty_display_product_message">Product display name cannot be empty</string>
+    <string name="empty_display_supplier_message">Supplier display name cannot be empty</string>
+
+    <string name="select_product_display_message">Select product display name</string>
+    <string name="select_supplier_display_message">Select supplier display name</string>
+
+    <string name="empty_location_message">Location cannot be empty</string>
+    <string name="empty_phone_number_message">Phone number cannot be empty</string>
+    <string name="short_display_name_message">Display name should be short</string>
+    <string name="empty_display_name_message">Display name cannot be empty</string>
+    <string name="empty_supplier_name_message">Supplier name cannot be empty</string>
+
+    <string name="empty_customer_name_message">The name of the customer cannot be empty</string>
+    <string name="empty_customer_phone_message">The customer should provide a phone number</string>
+    <string name="empty_customer_location_message">The location of the customer should be provided</string>
+    <string name="delete_all_customers_message">Are you sure you want to delete all customers?</string>
+    <string name="delete_customer_message">Are you sure you want to delete this customer?</string>
+
+    <string name="delete_product_message">Are you sure you want to delete this product?</string>
+
+    <string name="purchase_error_message">Error making the purchase</string>
+    <string name="purchase_success_message">Purchase successfully made!</string>
+    <string name="quantity_not_enough_message">Stock quantity not enough to make a purchase</string>
+    <string name="empty_customer_message">Customer cannot be empty. Add one before making a purchase</string>
+    <string name="zero_quantity_message">Quantity cannot be 0</string>
+    <string name="select_customer_message">Select the customer buying</string>
+
+    <string name="empty_product_name_message">Product name cannot be empty</string>
+    <string name="empty_short_display_name_message">Display name cannot be empty and must be at least 15 characters long</string>
+    <string name="empty_supplier_with_tip_message">Supplier cannot be empty. Add one from the supply chain page.</string>
+
+    <string name="format_error_message">A problem occurred while processing</string>
+
+    <string name="positive_button">Yes</string>
+    <string name="negative_button">No</string>
+    <string name="negative_cancel_button">Cancel</string>
+</resources>

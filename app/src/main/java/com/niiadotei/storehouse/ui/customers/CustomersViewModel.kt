@@ -173,7 +173,7 @@ class CustomersViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Rec
             override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
 
                 if (charSequence.isEmpty()) {
-                    updateArray(databaseHelper.customerArray)
+                    updateArray(jsonArray)
                 } else {
                     updateArray(filterResults.values as JSONArray)
                 }

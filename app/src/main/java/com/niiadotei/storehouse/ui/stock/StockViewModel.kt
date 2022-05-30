@@ -207,7 +207,7 @@ class StockViewModel(var fragment: Fragment, var jsonArray: JSONArray) : Recycle
             override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
 
                 if (charSequence.isEmpty()) {
-                    updateArray(databaseHelper.productArray)
+                    updateArray(jsonArray)
                 } else {
                     updateArray(filterResults.values as JSONArray)
 

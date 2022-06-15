@@ -66,7 +66,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/learnHowHutton"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:text="@string/learn_how"

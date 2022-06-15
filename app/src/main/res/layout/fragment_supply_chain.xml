@@ -10,7 +10,7 @@
         android:id="@+id/supplyChainRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="8dp"
         android:paddingStart="@dimen/default_dimen"
         android:paddingEnd="@dimen/default_dimen"
         android:contentDescription="@string/recycler_product_description"

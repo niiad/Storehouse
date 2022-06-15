@@ -35,6 +35,8 @@ class StockFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentStockBinding.inflate(inflater, container, false)
 
+
+
         databaseHelper = DatabaseHelper(this.activity)
 
         val recyclerView = binding.productRecyclerView

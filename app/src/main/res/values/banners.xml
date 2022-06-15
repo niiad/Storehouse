@@ -3,5 +3,5 @@
     <string name="stock_banner_title">Manage Your Stock</string>
     <string name="stock_banner_msg_1">- Sell products</string>
     <string name="stock_banner_msg_2">- Track quantity in realtime</string>
-    <string name="learn_how">Learn How</string>
+    <string name="add_product_stock">Add Product</string>
 </resources>

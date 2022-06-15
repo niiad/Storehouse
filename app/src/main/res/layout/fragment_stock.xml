@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,6 +7,76 @@
     android:layout_height="match_parent"
     android:id="@+id/stockFragment"
     tools:context=".ui.stock.StockFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/stockBanner"
+        android:background="@drawable/banner_stock"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp">
+
+        <ImageView
+            android:id="@+id/stockBannerImage"
+            android:layout_width="112dp"
+            android:layout_height="84dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/storefront"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/stockBannerTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/stock_banner_title"
+            android:textColor="@color/secondary_white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/stockBannerImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/stockBannerMsg1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/stock_banner_msg_1"
+            android:textSize="14sp"
+            android:textColor="@color/secondary_white"
+            app:layout_constraintStart_toStartOf="@+id/stockBannerTitle"
+            app:layout_constraintTop_toBottomOf="@+id/stockBannerTitle" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/stockBannerMsg2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stock_banner_msg_2"
+            android:textSize="14sp"
+            android:textColor="@color/secondary_white"
+            app:layout_constraintStart_toStartOf="@+id/stockBannerMsg1"
+            app:layout_constraintTop_toBottomOf="@+id/stockBannerMsg1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/learnHowHutton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/learn_how"
+            app:cornerRadius="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/stockBannerMsg2"
+            app:layout_constraintStart_toStartOf="@+id/stockBannerMsg2"
+            app:layout_constraintTop_toBottomOf="@+id/stockBannerMsg2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/productRecyclerView"
@@ -16,12 +86,6 @@
         android:paddingStart="@dimen/default_dimen"
         android:paddingEnd="@dimen/default_dimen"
         android:contentDescription="@string/recycler_product_description"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item_product" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -38,4 +102,4 @@
         app:layout_constraintBottom_toBottomOf="@+id/productRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:rippleColor="@color/secondary_yellow" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
